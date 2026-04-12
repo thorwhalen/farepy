@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>farepy.util &mdash; farepy 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            farepy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy.html">farepy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy/base.html">farepy.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy/batch.html">farepy.batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy/cache.html">farepy.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy/core.html">farepy.core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy/sources.html">farepy.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy/sources/google_flights_source.html">farepy.sources.google_flights_source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy/sources/kayak_source.html">farepy.sources.kayak_source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy/sources/ryanair_source.html">farepy.sources.ryanair_source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/farepy/util.html">farepy.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">farepy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">farepy.util</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for farepy.util</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Internal utilities for farepy.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+
+<div class="viewcode-block" id="parse_iso_duration">
+<a class="viewcode-back" href="../../module_docs/farepy/util.html#farepy.util.parse_iso_duration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_iso_duration</span><span class="p">(</span><span class="n">duration</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse ISO 8601 duration string to minutes.</span>
+
+<span class="sd">    &gt;&gt;&gt; parse_iso_duration(&#39;PT2H30M&#39;)</span>
+<span class="sd">    150</span>
+<span class="sd">    &gt;&gt;&gt; parse_iso_duration(&#39;PT45M&#39;)</span>
+<span class="sd">    45</span>
+<span class="sd">    &gt;&gt;&gt; parse_iso_duration(&#39;PT1H&#39;)</span>
+<span class="sd">    60</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">duration</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;PT(?:(\d+)H)?(?:(\d+)M)?&#39;</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">hours</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">minutes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hours</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">minutes</span></div>
+
+
+
+<div class="viewcode-block" id="reformat_date">
+<a class="viewcode-back" href="../../module_docs/farepy/util.html#farepy.util.reformat_date">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">reformat_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">to_kiwi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert between date formats.</span>
+
+<span class="sd">    &gt;&gt;&gt; reformat_date(&#39;2026-04-18&#39;, to_kiwi=True)</span>
+<span class="sd">    &#39;18/04/2026&#39;</span>
+<span class="sd">    &gt;&gt;&gt; reformat_date(&#39;18/04/2026&#39;)</span>
+<span class="sd">    &#39;2026-04-18&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">to_kiwi</span><span class="p">:</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="parse_leg">
+<a class="viewcode-back" href="../../module_docs/farepy/util.html#farepy.util.parse_leg">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_leg</span><span class="p">(</span><span class="n">leg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a leg string like &#39;MRS-REK&#39; into (origin, destination).</span>
+
+<span class="sd">    &gt;&gt;&gt; parse_leg(&#39;MRS-REK&#39;)</span>
+<span class="sd">    (&#39;MRS&#39;, &#39;REK&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">leg</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Invalid leg format: </span><span class="si">{</span><span class="n">leg</span><span class="si">!r}</span><span class="s2">. Expected &#39;XXX-YYY&#39; &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;(two 3-letter IATA codes separated by a dash).&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="extract_time">
+<a class="viewcode-back" href="../../module_docs/farepy/util.html#farepy.util.extract_time">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_time</span><span class="p">(</span><span class="n">iso_datetime</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract HH:MM from an ISO 8601 datetime string.</span>
+
+<span class="sd">    &gt;&gt;&gt; extract_time(&#39;2026-04-18T06:30:00&#39;)</span>
+<span class="sd">    &#39;06:30&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">iso_datetime</span><span class="p">[</span><span class="mi">11</span><span class="p">:</span><span class="mi">16</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="time_in_range">
+<a class="viewcode-back" href="../../module_docs/farepy/util.html#farepy.util.time_in_range">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">time_in_range</span><span class="p">(</span>
+    <span class="n">time_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">after</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">before</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if a HH:MM time falls within the given range.</span>
+
+<span class="sd">    &gt;&gt;&gt; time_in_range(&#39;14:30&#39;, after=&#39;08:00&#39;, before=&#39;18:00&#39;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; time_in_range(&#39;06:00&#39;, after=&#39;08:00&#39;)</span>
+<span class="sd">    False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">after</span> <span class="ow">and</span> <span class="n">time_str</span> <span class="o">&lt;</span> <span class="n">after</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">before</span> <span class="ow">and</span> <span class="n">time_str</span> <span class="o">&gt;</span> <span class="n">before</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="check_api_key">
+<a class="viewcode-back" href="../../module_docs/farepy/util.html#farepy.util.check_api_key">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_api_key</span><span class="p">(</span>
+    <span class="n">env_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">signup_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">explicit_value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check for an API key, returning (value, message).</span>
+
+<span class="sd">    Checks explicit_value first, then the environment variable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">explicit_value</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env_var</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2"> API key configured.&quot;</span>
+    <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2"> API key not configured. &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Get one at </span><span class="si">{</span><span class="n">signup_url</span><span class="si">}</span><span class="s2"> . &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Then set the </span><span class="si">{</span><span class="n">env_var</span><span class="si">}</span><span class="s2"> environment variable, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;or pass it via the settings panel.&quot;</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="now_iso">
+<a class="viewcode-back" href="../../module_docs/farepy/util.html#farepy.util.now_iso">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">now_iso</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return current UTC time as ISO 8601 string.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%SZ&#39;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

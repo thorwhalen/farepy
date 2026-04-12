@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>farepy.cache &mdash; farepy 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="farepy.core" href="core.html" />
+    <link rel="prev" title="farepy.batch" href="batch.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            farepy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../farepy.html">farepy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">farepy.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">farepy.batch</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">farepy.cache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.cache.cache_key"><code class="docutils literal notranslate"><span class="pre">cache_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.cache.clear_cache"><code class="docutils literal notranslate"><span class="pre">clear_cache()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.cache.get_cached"><code class="docutils literal notranslate"><span class="pre">get_cached()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.cache.get_cached_result"><code class="docutils literal notranslate"><span class="pre">get_cached_result()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.cache.list_cached_searches"><code class="docutils literal notranslate"><span class="pre">list_cached_searches()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.cache.put_cache"><code class="docutils literal notranslate"><span class="pre">put_cache()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">farepy.core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources.html">farepy.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources/google_flights_source.html">farepy.sources.google_flights_source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources/kayak_source.html">farepy.sources.kayak_source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources/ryanair_source.html">farepy.sources.ryanair_source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">farepy.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">farepy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">farepy.cache</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/farepy/cache.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-farepy.cache">
+<span id="farepy-cache"></span><h1>farepy.cache<a class="headerlink" href="#module-farepy.cache" title="Link to this heading"></a></h1>
+<p>JSON file-based caching for flight search results.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.cache.cache_key">
+<span class="sig-prename descclassname"><span class="pre">farepy.cache.</span></span><span class="sig-name descname"><span class="pre">cache_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="base.html#farepy.base.SearchRequest" title="farepy.base.SearchRequest"><span class="pre">SearchRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/farepy/cache.html#cache_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.cache.cache_key" title="Link to this definition"></a></dt>
+<dd><p>Generate a deterministic cache key from search parameters.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.cache.clear_cache">
+<span class="sig-prename descclassname"><span class="pre">farepy.cache.</span></span><span class="sig-name descname"><span class="pre">clear_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/farepy/cache.html#clear_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.cache.clear_cache" title="Link to this definition"></a></dt>
+<dd><p>Clear all cached results. Returns count of files removed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.cache.get_cached">
+<span class="sig-prename descclassname"><span class="pre">farepy.cache.</span></span><span class="sig-name descname"><span class="pre">get_cached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="base.html#farepy.base.SearchRequest" title="farepy.base.SearchRequest"><span class="pre">SearchRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ttl_hours</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">24</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/farepy/cache.html#get_cached"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.cache.get_cached" title="Link to this definition"></a></dt>
+<dd><p>Return cached result dict if fresh, else None.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.cache.get_cached_result">
+<span class="sig-prename descclassname"><span class="pre">farepy.cache.</span></span><span class="sig-name descname"><span class="pre">get_cached_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/farepy/cache.html#get_cached_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.cache.get_cached_result" title="Link to this definition"></a></dt>
+<dd><p>Get a specific cached result by its ID (filename stem).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.cache.list_cached_searches">
+<span class="sig-prename descclassname"><span class="pre">farepy.cache.</span></span><span class="sig-name descname"><span class="pre">list_cached_searches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/farepy/cache.html#list_cached_searches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.cache.list_cached_searches" title="Link to this definition"></a></dt>
+<dd><p>Return summaries of all cached results.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.cache.put_cache">
+<span class="sig-prename descclassname"><span class="pre">farepy.cache.</span></span><span class="sig-name descname"><span class="pre">put_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="base.html#farepy.base.SearchResult" title="farepy.base.SearchResult"><span class="pre">SearchResult</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/farepy/cache.html#put_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.cache.put_cache" title="Link to this definition"></a></dt>
+<dd><p>Cache a SearchResult. Returns the cache filename.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="batch.html" class="btn btn-neutral float-left" title="farepy.batch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="core.html" class="btn btn-neutral float-right" title="farepy.core" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

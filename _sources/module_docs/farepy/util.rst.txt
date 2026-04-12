@@ -1,0 +1,4 @@
+farepy.util
+===========
+.. automodule:: farepy.util
+   :members:

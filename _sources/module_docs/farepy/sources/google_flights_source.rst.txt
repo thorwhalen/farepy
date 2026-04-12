@@ -1,0 +1,4 @@
+farepy.sources.google_flights_source
+====================================
+.. automodule:: farepy.sources.google_flights_source
+   :members:

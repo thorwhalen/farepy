@@ -1,0 +1,4 @@
+farepy.batch
+============
+.. automodule:: farepy.batch
+   :members:

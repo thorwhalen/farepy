@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>farepy.util &mdash; farepy 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="farepy.sources.ryanair_source" href="sources/ryanair_source.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            farepy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../farepy.html">farepy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">farepy.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">farepy.batch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cache.html">farepy.cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">farepy.core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources.html">farepy.sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources/google_flights_source.html">farepy.sources.google_flights_source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources/kayak_source.html">farepy.sources.kayak_source</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources/ryanair_source.html">farepy.sources.ryanair_source</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">farepy.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.util.check_api_key"><code class="docutils literal notranslate"><span class="pre">check_api_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.util.extract_time"><code class="docutils literal notranslate"><span class="pre">extract_time()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.util.now_iso"><code class="docutils literal notranslate"><span class="pre">now_iso()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.util.parse_iso_duration"><code class="docutils literal notranslate"><span class="pre">parse_iso_duration()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.util.parse_leg"><code class="docutils literal notranslate"><span class="pre">parse_leg()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.util.reformat_date"><code class="docutils literal notranslate"><span class="pre">reformat_date()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#farepy.util.time_in_range"><code class="docutils literal notranslate"><span class="pre">time_in_range()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">farepy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">farepy.util</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/farepy/util.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-farepy.util">
+<span id="farepy-util"></span><h1>farepy.util<a class="headerlink" href="#module-farepy.util" title="Link to this heading"></a></h1>
+<p>Internal utilities for farepy.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.util.check_api_key">
+<span class="sig-prename descclassname"><span class="pre">farepy.util.</span></span><span class="sig-name descname"><span class="pre">check_api_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signup_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explicit_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/farepy/util.html#check_api_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.util.check_api_key" title="Link to this definition"></a></dt>
+<dd><p>Check for an API key, returning (value, message).</p>
+<p>Checks explicit_value first, then the environment variable.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.util.extract_time">
+<span class="sig-prename descclassname"><span class="pre">farepy.util.</span></span><span class="sig-name descname"><span class="pre">extract_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iso_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/farepy/util.html#extract_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.util.extract_time" title="Link to this definition"></a></dt>
+<dd><p>Extract HH:MM from an ISO 8601 datetime string.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">extract_time</span><span class="p">(</span><span class="s1">&#39;2026-04-18T06:30:00&#39;</span><span class="p">)</span>
+<span class="go">&#39;06:30&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.util.now_iso">
+<span class="sig-prename descclassname"><span class="pre">farepy.util.</span></span><span class="sig-name descname"><span class="pre">now_iso</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/farepy/util.html#now_iso"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.util.now_iso" title="Link to this definition"></a></dt>
+<dd><p>Return current UTC time as ISO 8601 string.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.util.parse_iso_duration">
+<span class="sig-prename descclassname"><span class="pre">farepy.util.</span></span><span class="sig-name descname"><span class="pre">parse_iso_duration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/farepy/util.html#parse_iso_duration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.util.parse_iso_duration" title="Link to this definition"></a></dt>
+<dd><p>Parse ISO 8601 duration string to minutes.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_iso_duration</span><span class="p">(</span><span class="s1">&#39;PT2H30M&#39;</span><span class="p">)</span>
+<span class="go">150</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_iso_duration</span><span class="p">(</span><span class="s1">&#39;PT45M&#39;</span><span class="p">)</span>
+<span class="go">45</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_iso_duration</span><span class="p">(</span><span class="s1">&#39;PT1H&#39;</span><span class="p">)</span>
+<span class="go">60</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.util.parse_leg">
+<span class="sig-prename descclassname"><span class="pre">farepy.util.</span></span><span class="sig-name descname"><span class="pre">parse_leg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/farepy/util.html#parse_leg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.util.parse_leg" title="Link to this definition"></a></dt>
+<dd><p>Parse a leg string like ‘MRS-REK’ into (origin, destination).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_leg</span><span class="p">(</span><span class="s1">&#39;MRS-REK&#39;</span><span class="p">)</span>
+<span class="go">(&#39;MRS&#39;, &#39;REK&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.util.reformat_date">
+<span class="sig-prename descclassname"><span class="pre">farepy.util.</span></span><span class="sig-name descname"><span class="pre">reformat_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_kiwi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/farepy/util.html#reformat_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.util.reformat_date" title="Link to this definition"></a></dt>
+<dd><p>Convert between date formats.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_date</span><span class="p">(</span><span class="s1">&#39;2026-04-18&#39;</span><span class="p">,</span> <span class="n">to_kiwi</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">&#39;18/04/2026&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reformat_date</span><span class="p">(</span><span class="s1">&#39;18/04/2026&#39;</span><span class="p">)</span>
+<span class="go">&#39;2026-04-18&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="farepy.util.time_in_range">
+<span class="sig-prename descclassname"><span class="pre">farepy.util.</span></span><span class="sig-name descname"><span class="pre">time_in_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">after</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">before</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../_modules/farepy/util.html#time_in_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#farepy.util.time_in_range" title="Link to this definition"></a></dt>
+<dd><p>Check if a HH:MM time falls within the given range.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">time_in_range</span><span class="p">(</span><span class="s1">&#39;14:30&#39;</span><span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="s1">&#39;08:00&#39;</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="s1">&#39;18:00&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">time_in_range</span><span class="p">(</span><span class="s1">&#39;06:00&#39;</span><span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="s1">&#39;08:00&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sources/ryanair_source.html" class="btn btn-neutral float-left" title="farepy.sources.ryanair_source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

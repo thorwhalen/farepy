@@ -1,0 +1,14 @@
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   module_docs/farepy
+   module_docs/farepy/base
+   module_docs/farepy/batch
+   module_docs/farepy/cache
+   module_docs/farepy/core
+   module_docs/farepy/sources
+   module_docs/farepy/sources/google_flights_source
+   module_docs/farepy/sources/kayak_source
+   module_docs/farepy/sources/ryanair_source
+   module_docs/farepy/util

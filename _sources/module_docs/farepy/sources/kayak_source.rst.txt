@@ -1,0 +1,4 @@
+farepy.sources.kayak_source
+===========================
+.. automodule:: farepy.sources.kayak_source
+   :members:

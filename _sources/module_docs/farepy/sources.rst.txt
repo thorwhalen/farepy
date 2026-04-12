@@ -1,0 +1,4 @@
+farepy.sources
+==============
+.. automodule:: farepy.sources
+   :members:

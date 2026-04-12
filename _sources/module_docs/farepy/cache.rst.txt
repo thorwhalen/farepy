@@ -1,0 +1,4 @@
+farepy.cache
+============
+.. automodule:: farepy.cache
+   :members:
