@@ -15,7 +15,7 @@ def search_flights(
     *,
     return_date: str | None = None,
     sources: list[str] | None = None,
-    currency: str = 'EUR',
+    currency: str = "EUR",
     adults: int = 1,
     non_stop: bool | None = None,
     max_results: int = 50,
@@ -82,9 +82,7 @@ def search_flights(
     # Determine which sources to query
     if sources is None:
         sources_to_query = [
-            name
-            for name in ALL_SOURCES
-            if make_source(name).is_available()[0]
+            name for name in ALL_SOURCES if make_source(name).is_available()[0]
         ]
     else:
         sources_to_query = [s for s in sources if s in ALL_SOURCES]
@@ -96,8 +94,8 @@ def search_flights(
                 offers=[],
                 sources_queried=[],
                 sources_failed={
-                    'all': 'No sources available. Install a source package: '
-                    'pip install farepy[google_flights] or pip install farepy[ryanair]'
+                    "all": "No sources available. Install a source package: "
+                    "pip install farepy[google_flights] or pip install farepy[ryanair]"
                 },
                 searched_at=now_iso(),
             )
@@ -113,7 +111,7 @@ def search_flights(
         )
         if cached is not None:
             # Apply time filters to cached results
-            cached['offers'] = _apply_time_filters(cached.get('offers', []), request)
+            cached["offers"] = _apply_time_filters(cached.get("offers", []), request)
             return cached
 
     # Query sources in parallel
@@ -129,8 +127,7 @@ def search_flights(
 
     with ThreadPoolExecutor(max_workers=len(sources_to_query)) as executor:
         futures = {
-            executor.submit(_query_source, name): name
-            for name in sources_to_query
+            executor.submit(_query_source, name): name for name in sources_to_query
         }
         for future in as_completed(futures):
             name, result = future.result()
@@ -156,39 +153,41 @@ def search_flights(
 
     # Apply time filters to the result
     result_dict = asdict(result)
-    result_dict['offers'] = _apply_time_filters(result_dict['offers'], request)
+    result_dict["offers"] = _apply_time_filters(result_dict["offers"], request)
 
     return result_dict
 
 
-def _apply_time_filters(
-    offers: list[dict], request: SearchRequest
-) -> list[dict]:
+def _apply_time_filters(offers: list[dict], request: SearchRequest) -> list[dict]:
     """Filter offers by time ranges (post-query)."""
-    has_outbound_filter = any([
-        request.outbound_departure_after,
-        request.outbound_departure_before,
-        request.outbound_arrival_after,
-        request.outbound_arrival_before,
-    ])
-    has_inbound_filter = any([
-        request.inbound_departure_after,
-        request.inbound_departure_before,
-        request.inbound_arrival_after,
-        request.inbound_arrival_before,
-    ])
+    has_outbound_filter = any(
+        [
+            request.outbound_departure_after,
+            request.outbound_departure_before,
+            request.outbound_arrival_after,
+            request.outbound_arrival_before,
+        ]
+    )
+    has_inbound_filter = any(
+        [
+            request.inbound_departure_after,
+            request.inbound_departure_before,
+            request.inbound_arrival_after,
+            request.inbound_arrival_before,
+        ]
+    )
 
     if not has_outbound_filter and not has_inbound_filter:
         return offers
 
     filtered = []
     for offer in offers:
-        outbound = offer.get('outbound', {})
-        segments = outbound.get('segments', [])
+        outbound = offer.get("outbound", {})
+        segments = outbound.get("segments", [])
 
         if has_outbound_filter and segments:
-            dep_time = extract_time(segments[0].get('departure_time', ''))
-            arr_time = extract_time(segments[-1].get('arrival_time', ''))
+            dep_time = extract_time(segments[0].get("departure_time", ""))
+            arr_time = extract_time(segments[-1].get("arrival_time", ""))
 
             if not time_in_range(
                 dep_time,
@@ -203,12 +202,12 @@ def _apply_time_filters(
             ):
                 continue
 
-        inbound = offer.get('inbound')
+        inbound = offer.get("inbound")
         if has_inbound_filter and inbound:
-            in_segments = inbound.get('segments', [])
+            in_segments = inbound.get("segments", [])
             if in_segments:
-                dep_time = extract_time(in_segments[0].get('departure_time', ''))
-                arr_time = extract_time(in_segments[-1].get('arrival_time', ''))
+                dep_time = extract_time(in_segments[0].get("departure_time", ""))
+                arr_time = extract_time(in_segments[-1].get("arrival_time", ""))
 
                 if not time_in_range(
                     dep_time,

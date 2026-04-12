@@ -11,7 +11,7 @@ def batch_search(
     *,
     return_dates: list[str] | None = None,
     sources: list[str] | None = None,
-    currency: str = 'EUR',
+    currency: str = "EUR",
     adults: int = 1,
     non_stop: bool | None = None,
     max_results: int = 50,
@@ -80,18 +80,20 @@ def parse_batch_file(file_content: str) -> list[dict]:
     searches = []
     for line_num, line in enumerate(file_content.strip().splitlines(), 1):
         line = line.strip()
-        if not line or line.startswith('#'):
+        if not line or line.startswith("#"):
             continue
         parts = line.split()
         if len(parts) < 2:
             raise ValueError(
                 f'Line {line_num}: expected "LEG DATE [RETURN_DATE]", got: {line!r}'
             )
-        searches.append({
-            'leg': parts[0],
-            'departure_date': parts[1],
-            'return_date': parts[2] if len(parts) > 2 else None,
-        })
+        searches.append(
+            {
+                "leg": parts[0],
+                "departure_date": parts[1],
+                "return_date": parts[2] if len(parts) > 2 else None,
+            }
+        )
     return searches
 
 
@@ -99,7 +101,7 @@ def batch_from_file(
     file_content: str,
     *,
     sources: list[str] | None = None,
-    currency: str = 'EUR',
+    currency: str = "EUR",
     adults: int = 1,
     non_stop: bool | None = None,
     max_results: int = 50,
@@ -121,9 +123,9 @@ def batch_from_file(
     results = []
     for s in searches:
         result = search_flights(
-            leg=s['leg'],
-            departure_date=s['departure_date'],
-            return_date=s['return_date'],
+            leg=s["leg"],
+            departure_date=s["departure_date"],
+            return_date=s["return_date"],
             sources=sources,
             currency=currency,
             adults=adults,

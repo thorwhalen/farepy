@@ -11,7 +11,7 @@ from farepy.base import FlightOffer, Itinerary, SearchRequest, Segment
 
 
 class RyanairSource:
-    name = 'ryanair'
+    name = "ryanair"
 
     def __init__(self, **_kwargs):
         pass
@@ -20,9 +20,9 @@ class RyanairSource:
         try:
             from ryanair import Ryanair  # noqa: F401
 
-            return True, 'Ryanair source ready (via ryanair-py).'
+            return True, "Ryanair source ready (via ryanair-py)."
         except ImportError:
-            return False, 'ryanair-py not installed. Run: pip install ryanair-py'
+            return False, "ryanair-py not installed. Run: pip install ryanair-py"
 
     def search(self, request: SearchRequest) -> list[FlightOffer]:
         from ryanair import Ryanair
@@ -51,7 +51,7 @@ class RyanairSource:
 
 def _convert_flight(flight) -> FlightOffer:
     """Convert a ryanair-py Flight to a normalized FlightOffer."""
-    dep_time = flight.departureTime.strftime('%Y-%m-%dT%H:%M:%S')
+    dep_time = flight.departureTime.strftime("%Y-%m-%dT%H:%M:%S")
 
     outbound = Itinerary(
         segments=[
@@ -59,27 +59,27 @@ def _convert_flight(flight) -> FlightOffer:
                 departure_airport=flight.origin,
                 arrival_airport=flight.destination,
                 departure_time=dep_time,
-                arrival_time='',  # Not available from fare finder API
-                carrier='FR',
-                carrier_name='Ryanair',
+                arrival_time="",  # Not available from fare finder API
+                carrier="FR",
+                carrier_name="Ryanair",
                 flight_number=flight.flightNumber,
             )
         ],
     )
 
     return FlightOffer(
-        source='ryanair',
+        source="ryanair",
         outbound=outbound,
         price=flight.price,
         currency=flight.currency,
-        airlines=['FR'],
+        airlines=["FR"],
     )
 
 
 def _convert_trip(trip) -> FlightOffer:
     """Convert a ryanair-py Trip to a normalized FlightOffer."""
-    out_time = trip.outbound.departureTime.strftime('%Y-%m-%dT%H:%M:%S')
-    in_time = trip.inbound.departureTime.strftime('%Y-%m-%dT%H:%M:%S')
+    out_time = trip.outbound.departureTime.strftime("%Y-%m-%dT%H:%M:%S")
+    in_time = trip.inbound.departureTime.strftime("%Y-%m-%dT%H:%M:%S")
 
     outbound = Itinerary(
         segments=[
@@ -87,9 +87,9 @@ def _convert_trip(trip) -> FlightOffer:
                 departure_airport=trip.outbound.origin,
                 arrival_airport=trip.outbound.destination,
                 departure_time=out_time,
-                arrival_time='',  # Not available from fare finder API
-                carrier='FR',
-                carrier_name='Ryanair',
+                arrival_time="",  # Not available from fare finder API
+                carrier="FR",
+                carrier_name="Ryanair",
                 flight_number=trip.outbound.flightNumber,
             )
         ],
@@ -101,19 +101,19 @@ def _convert_trip(trip) -> FlightOffer:
                 departure_airport=trip.inbound.origin,
                 arrival_airport=trip.inbound.destination,
                 departure_time=in_time,
-                arrival_time='',  # Not available from fare finder API
-                carrier='FR',
-                carrier_name='Ryanair',
+                arrival_time="",  # Not available from fare finder API
+                carrier="FR",
+                carrier_name="Ryanair",
                 flight_number=trip.inbound.flightNumber,
             )
         ],
     )
 
     return FlightOffer(
-        source='ryanair',
+        source="ryanair",
         outbound=outbound,
         inbound=inbound,
         price=trip.totalPrice,
         currency=trip.outbound.currency,
-        airlines=['FR'],
+        airlines=["FR"],
     )

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "farepy"
-version = "0.1.0"
+version = "0.1.1"
 description = "Multi-source flight search with normalized results, caching, and batch support"
 license = "MIT"
 authors = [{ name = "Thor Whalen" }]

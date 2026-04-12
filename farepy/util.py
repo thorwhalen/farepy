@@ -17,7 +17,7 @@ def parse_iso_duration(duration: str) -> int | None:
     """
     if not duration:
         return None
-    m = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?', duration)
+    m = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?", duration)
     if not m:
         return None
     hours = int(m.group(1) or 0)
@@ -34,11 +34,11 @@ def reformat_date(date_str: str, *, to_kiwi: bool = False) -> str:
     '2026-04-18'
     """
     if to_kiwi:
-        dt = datetime.strptime(date_str, '%Y-%m-%d')
-        return dt.strftime('%d/%m/%Y')
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        return dt.strftime("%d/%m/%Y")
     else:
-        dt = datetime.strptime(date_str, '%d/%m/%Y')
-        return dt.strftime('%Y-%m-%d')
+        dt = datetime.strptime(date_str, "%d/%m/%Y")
+        return dt.strftime("%Y-%m-%d")
 
 
 def parse_leg(leg: str) -> tuple[str, str]:
@@ -47,7 +47,7 @@ def parse_leg(leg: str) -> tuple[str, str]:
     >>> parse_leg('MRS-REK')
     ('MRS', 'REK')
     """
-    parts = leg.strip().upper().split('-')
+    parts = leg.strip().upper().split("-")
     if len(parts) != 2 or not all(len(p) == 3 and p.isalpha() for p in parts):
         raise ValueError(
             f"Invalid leg format: {leg!r}. Expected 'XXX-YYY' "
@@ -109,4 +109,4 @@ def check_api_key(
 
 def now_iso() -> str:
     """Return current UTC time as ISO 8601 string."""
-    return datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
+    return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
