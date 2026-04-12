@@ -179,9 +179,6 @@ def _parse_card(card, request: SearchRequest) -> FlightOffer | None:
     airline_text = _extract_airline(card, text)
     airlines = [airline_text] if airline_text else []
 
-    # Extract stops info
-    stops = _extract_stops(card, text)
-
     # Extract duration
     duration = _extract_duration(card, text)
 
@@ -282,7 +279,7 @@ def _extract_airline(card, text: str) -> str | None:
         if el:
             return el.inner_text().strip()
     # Fallback: first non-time, non-price line that looks like an airline
-    lines = [l.strip() for l in text.split('\n') if l.strip()]
+    lines = [line.strip() for line in text.split('\n') if line.strip()]
     for line in lines:
         if re.match(r'^[A-Z][a-zA-Z\s]+$', line) and len(line) < 30:
             return line

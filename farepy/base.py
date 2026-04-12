@@ -1,6 +1,6 @@
 """Normalized data model for multi-source flight search."""
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from typing import Protocol
 
 
