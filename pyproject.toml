@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "farepy"
+version = "0.1.0"
+description = "Multi-source flight search with normalized results, caching, and batch support"
+license = "MIT"
+authors = [{ name = "Thor Whalen" }]
+requires-python = ">=3.10"
+dependencies = ["requests"]
+
+[project.urls]
+Homepage = "https://github.com/thorwhalen/farepy"
+Repository = "https://github.com/thorwhalen/farepy"
+Issues = "https://github.com/thorwhalen/farepy/issues"
+
+[project.optional-dependencies]
+kayak = ["playwright"]
+all = ["playwright"]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.wads.ci]
+installer = "uv"
+
+[tool.wads.ci.testing]
+python_versions = ["3.10", "3.12"]
+coverage_enabled = false
+test_on_windows = false
