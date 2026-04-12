@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>farepy.cache &mdash; farepy 0.1.0 documentation</title>
+  <title>farepy.cache &mdash; farepy 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -93,7 +93,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">farepy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">SearchRequest</span><span class="p">,</span> <span class="n">SearchResult</span>
 
-<span class="n">DEFAULT_CACHE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;.local&#39;</span> <span class="o">/</span> <span class="s1">&#39;share&#39;</span> <span class="o">/</span> <span class="s1">&#39;farepy&#39;</span> <span class="o">/</span> <span class="s1">&#39;cache&#39;</span>
+<span class="n">DEFAULT_CACHE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.local&quot;</span> <span class="o">/</span> <span class="s2">&quot;share&quot;</span> <span class="o">/</span> <span class="s2">&quot;farepy&quot;</span> <span class="o">/</span> <span class="s2">&quot;cache&quot;</span>
 <span class="n">DEFAULT_TTL_HOURS</span> <span class="o">=</span> <span class="mi">24</span>
 
 
@@ -108,25 +108,27 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">cache_key</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">SearchRequest</span><span class="p">,</span> <span class="n">sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a deterministic cache key from search parameters.&quot;&quot;&quot;</span>
     <span class="n">key_data</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;origin&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span>
-        <span class="s1">&#39;destination&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span>
-        <span class="s1">&#39;departure_date&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">departure_date</span><span class="p">,</span>
-        <span class="s1">&#39;return_date&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">return_date</span><span class="p">,</span>
-        <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
-        <span class="s1">&#39;adults&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">adults</span><span class="p">,</span>
-        <span class="s1">&#39;non_stop&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">non_stop</span><span class="p">,</span>
-        <span class="s1">&#39;sources&#39;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sources</span><span class="p">),</span>
+        <span class="s2">&quot;origin&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span>
+        <span class="s2">&quot;destination&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span>
+        <span class="s2">&quot;departure_date&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">departure_date</span><span class="p">,</span>
+        <span class="s2">&quot;return_date&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">return_date</span><span class="p">,</span>
+        <span class="s2">&quot;currency&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span>
+        <span class="s2">&quot;adults&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">adults</span><span class="p">,</span>
+        <span class="s2">&quot;non_stop&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">non_stop</span><span class="p">,</span>
+        <span class="s2">&quot;sources&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sources</span><span class="p">),</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span>
-        <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">key_data</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">12</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">key_data</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span>
+        <span class="p">:</span><span class="mi">12</span>
+    <span class="p">]</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_cache_filename</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">SearchRequest</span><span class="p">,</span> <span class="n">sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="n">h</span> <span class="o">=</span> <span class="n">cache_key</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">sources</span><span class="p">)</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;_</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">return_date</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">return_date</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">departure_date</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">origin</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">destination</span><span class="si">}{</span><span class="n">ret</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.json&#39;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">return_date</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">return_date</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">departure_date</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">origin</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">destination</span><span class="si">}{</span><span class="n">ret</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">.json&quot;</span>
+    <span class="p">)</span>
 
 
 <div class="viewcode-block" id="get_cached">
@@ -152,16 +154,16 @@
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="c1"># Check TTL</span>
-    <span class="n">searched_at</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;searched_at&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">searched_at</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;searched_at&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">searched_at</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">ts</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">searched_at</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="s1">&#39;+00:00&#39;</span><span class="p">))</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">searched_at</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;+00:00&quot;</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">tzinfo</span><span class="p">)</span> <span class="o">-</span> <span class="n">ts</span> <span class="o">&gt;</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">ttl_hours</span><span class="p">):</span>
                 <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># Expired</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
             <span class="k">pass</span>
 
-    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;cached&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cached&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="n">data</span></div>
 
 
@@ -181,8 +183,8 @@
 
     <span class="n">data</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="c1"># Strip raw source data from cache to save space</span>
-    <span class="k">for</span> <span class="n">offer</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;offers&#39;</span><span class="p">,</span> <span class="p">[]):</span>
-        <span class="n">offer</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">offer</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;offers&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+        <span class="n">offer</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;raw&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">str</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">fname</span></div>
@@ -196,21 +198,23 @@
     <span class="n">d</span> <span class="o">=</span> <span class="n">_cache_dir</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.json&#39;</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.json&quot;</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
-            <span class="n">req</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">,</span> <span class="p">{})</span>
-            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                <span class="s1">&#39;cache_id&#39;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
-                <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                <span class="s1">&#39;origin&#39;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;origin&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
-                <span class="s1">&#39;destination&#39;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;destination&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
-                <span class="s1">&#39;departure_date&#39;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;departure_date&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
-                <span class="s1">&#39;return_date&#39;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;return_date&#39;</span><span class="p">),</span>
-                <span class="s1">&#39;num_offers&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;offers&#39;</span><span class="p">,</span> <span class="p">[])),</span>
-                <span class="s1">&#39;sources_queried&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sources_queried&#39;</span><span class="p">,</span> <span class="p">[]),</span>
-                <span class="s1">&#39;searched_at&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;searched_at&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
-            <span class="p">})</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;request&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;cache_id&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
+                    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s2">&quot;origin&quot;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;origin&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                    <span class="s2">&quot;destination&quot;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;destination&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                    <span class="s2">&quot;departure_date&quot;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;departure_date&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                    <span class="s2">&quot;return_date&quot;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;return_date&quot;</span><span class="p">),</span>
+                    <span class="s2">&quot;num_offers&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;offers&quot;</span><span class="p">,</span> <span class="p">[])),</span>
+                    <span class="s2">&quot;sources_queried&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sources_queried&quot;</span><span class="p">,</span> <span class="p">[]),</span>
+                    <span class="s2">&quot;searched_at&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;searched_at&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
             <span class="k">continue</span>
 
@@ -223,13 +227,13 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">get_cached_result</span><span class="p">(</span><span class="n">cache_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a specific cached result by its ID (filename stem).&quot;&quot;&quot;</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">_cache_dir</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">d</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_id</span><span class="si">}</span><span class="s1">.json&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">d</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cache_id</span><span class="si">}</span><span class="s2">.json&quot;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Cache entry not found: </span><span class="si">{</span><span class="n">cache_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cache entry not found: </span><span class="si">{</span><span class="n">cache_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
-    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;cached&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cached&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="n">data</span></div>
 
 
@@ -240,10 +244,10 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Clear all cached results. Returns count of files removed.&quot;&quot;&quot;</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">_cache_dir</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.json&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.json&quot;</span><span class="p">):</span>
         <span class="n">path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
         <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;cleared&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;cleared&quot;</span><span class="p">:</span> <span class="n">count</span><span class="p">}</span></div>
 
 </pre></div>
 
