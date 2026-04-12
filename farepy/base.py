@@ -51,7 +51,7 @@ class Itinerary:
 class FlightOffer:
     """A single bookable flight option, normalized across all sources."""
 
-    source: str  # "amadeus" | "kiwi" | "kayak"
+    source: str  # "google_flights" | "ryanair" | "kayak"
     outbound: Itinerary
     price: float
     currency: str

@@ -1,10 +1,12 @@
 """Flight data source registry."""
 
-from farepy.sources.kiwi_source import KiwiSource
+from farepy.sources.google_flights_source import GoogleFlightsSource
+from farepy.sources.ryanair_source import RyanairSource
 from farepy.sources.kayak_source import KayakSource
 
 ALL_SOURCES = {
-    'kiwi': KiwiSource,
+    'google_flights': GoogleFlightsSource,
+    'ryanair': RyanairSource,
     'kayak': KayakSource,
 }
 
@@ -23,7 +25,6 @@ def available_sources(**kwargs) -> list[dict]:
     """Return status of all sources.
 
     Each dict has: name, available (bool), message (str).
-    API key kwargs are forwarded to each source constructor.
     """
     result = []
     for name, cls in ALL_SOURCES.items():

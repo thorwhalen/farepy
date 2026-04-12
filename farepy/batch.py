@@ -1,4 +1,4 @@
-"""Batch flight search — cartesian combinations and file parsing."""
+"""Batch flight search -- cartesian combinations and file parsing."""
 
 from itertools import product
 
@@ -18,7 +18,6 @@ def batch_search(
     use_cache: bool = True,
     cache_dir: str | None = None,
     cache_ttl_hours: float = 24,
-    kiwi_api_key: str | None = None,
 ) -> list[dict]:
     """Run a cartesian product of legs x departure_dates x return_dates.
 
@@ -37,15 +36,10 @@ def batch_search(
         use_cache: Use cached results
         cache_dir: Override cache directory
         cache_ttl_hours: Cache TTL
-        kiwi_api_key: Explicit key
 
     Returns:
         List of SearchResult dicts, one per combination.
     """
-    key_kwargs = {
-        'kiwi_api_key': kiwi_api_key,
-    }
-
     ret_dates = return_dates or [None]
     combos = list(product(legs, departure_dates, ret_dates))
 
@@ -63,7 +57,6 @@ def batch_search(
             use_cache=use_cache,
             cache_dir=cache_dir,
             cache_ttl_hours=cache_ttl_hours,
-            **key_kwargs,
         )
         results.append(result)
 
@@ -113,7 +106,6 @@ def batch_from_file(
     use_cache: bool = True,
     cache_dir: str | None = None,
     cache_ttl_hours: float = 24,
-    kiwi_api_key: str | None = None,
 ) -> list[dict]:
     """Parse a batch file and run all searches.
 
@@ -124,9 +116,6 @@ def batch_from_file(
     Returns:
         List of SearchResult dicts.
     """
-    key_kwargs = {
-        'kiwi_api_key': kiwi_api_key,
-    }
     searches = parse_batch_file(file_content)
 
     results = []
@@ -143,7 +132,6 @@ def batch_from_file(
             use_cache=use_cache,
             cache_dir=cache_dir,
             cache_ttl_hours=cache_ttl_hours,
-            **key_kwargs,
         )
         results.append(result)
 

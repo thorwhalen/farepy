@@ -1,11 +1,11 @@
-"""Search orchestration — the main entry point for flight searches."""
+"""Search orchestration -- the main entry point for flight searches."""
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict
 
 from farepy.base import FlightOffer, SearchRequest, SearchResult
 from farepy.cache import get_cached, put_cache
-from farepy.sources import ALL_SOURCES, available_sources, make_source
+from farepy.sources import ALL_SOURCES, make_source
 from farepy.util import extract_time, now_iso, parse_leg, time_in_range
 
 
@@ -30,8 +30,6 @@ def search_flights(
     use_cache: bool = True,
     cache_dir: str | None = None,
     cache_ttl_hours: float = 24,
-    # API keys (override env vars)
-    kiwi_api_key: str | None = None,
 ) -> dict:
     """Search for flights across selected sources.
 
@@ -39,7 +37,7 @@ def search_flights(
         leg: IATA pair like "MRS-REK"
         departure_date: YYYY-MM-DD
         return_date: YYYY-MM-DD or None for one-way
-        sources: List of source names (e.g. ["kiwi", "kayak"]).
+        sources: List of source names (e.g. ["google_flights", "ryanair"]).
             None means all available.
         currency: ISO 4217 currency code
         adults: Number of adult travelers
@@ -56,7 +54,6 @@ def search_flights(
         use_cache: Whether to use cached results
         cache_dir: Override default cache directory
         cache_ttl_hours: Cache time-to-live in hours
-        kiwi_api_key: Explicit Kiwi API key
 
     Returns:
         SearchResult as a dict.
@@ -82,16 +79,12 @@ def search_flights(
         inbound_arrival_before=inbound_arrival_before,
     )
 
-    key_kwargs = {
-        'kiwi_api_key': kiwi_api_key,
-    }
-
     # Determine which sources to query
     if sources is None:
         sources_to_query = [
             name
             for name in ALL_SOURCES
-            if make_source(name, **key_kwargs).is_available()[0]
+            if make_source(name).is_available()[0]
         ]
     else:
         sources_to_query = [s for s in sources if s in ALL_SOURCES]
@@ -103,7 +96,8 @@ def search_flights(
                 offers=[],
                 sources_queried=[],
                 sources_failed={
-                    'all': 'No sources available. Configure API keys or install dependencies.'
+                    'all': 'No sources available. Install a source package: '
+                    'pip install farepy[google_flights] or pip install farepy[ryanair]'
                 },
                 searched_at=now_iso(),
             )
@@ -112,8 +106,10 @@ def search_flights(
     # Check cache (time filters are applied post-query, so cache key ignores them)
     if use_cache:
         cached = get_cached(
-            request, sources_to_query,
-            cache_dir=cache_dir, ttl_hours=cache_ttl_hours,
+            request,
+            sources_to_query,
+            cache_dir=cache_dir,
+            ttl_hours=cache_ttl_hours,
         )
         if cached is not None:
             # Apply time filters to cached results
@@ -126,7 +122,7 @@ def search_flights(
 
     def _query_source(name: str) -> tuple[str, list[FlightOffer] | str]:
         try:
-            source = make_source(name, **key_kwargs)
+            source = make_source(name)
             return name, source.search(request)
         except Exception as e:
             return name, str(e)

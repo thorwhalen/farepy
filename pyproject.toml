@@ -9,7 +9,7 @@ description = "Multi-source flight search with normalized results, caching, and 
 license = "MIT"
 authors = [{ name = "Thor Whalen" }]
 requires-python = ">=3.10"
-dependencies = ["requests"]
+dependencies = []
 
 [project.urls]
 Homepage = "https://github.com/thorwhalen/farepy"
@@ -17,8 +17,10 @@ Repository = "https://github.com/thorwhalen/farepy"
 Issues = "https://github.com/thorwhalen/farepy/issues"
 
 [project.optional-dependencies]
+google_flights = ["fast-flights"]
+ryanair = ["ryanair-py"]
 kayak = ["playwright"]
-all = ["playwright"]
+all = ["fast-flights", "ryanair-py", "playwright"]
 dev = ["pytest"]
 
 [tool.setuptools.packages.find]
