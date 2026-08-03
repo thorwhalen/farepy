@@ -26,6 +26,15 @@ dev = ["pytest"]
 [tool.setuptools.packages.find]
 where = ["."]
 
+[tool.pytest.ini_options]
+minversion = "6.0"
+# The package dir is listed explicitly: wads CI runs `pytest --doctest-modules`
+# with no path argument, so collection is driven entirely by `testpaths`.
+testpaths = ["farepy"]
+# Mirrors the flags CI passes via `-o doctest_optionflags=...`, so a local run
+# behaves identically to the CI run.
+doctest_optionflags = ["ELLIPSIS", "IGNORE_EXCEPTION_DETAIL"]
+
 [tool.wads.ci]
 installer = "uv"
 
