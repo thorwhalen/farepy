@@ -6,13 +6,43 @@ build-backend = "setuptools.build_meta"
 name = "farepy"
 version = "0.1.5"
 description = "Multi-source flight search with normalized results, caching, and batch support"
+readme = "README.md"
 license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "Thor Whalen" }]
 requires-python = ">=3.10"
+keywords = [
+    "flights",
+    "flight-search",
+    "airfare",
+    "travel",
+    "google-flights",
+    "ryanair",
+    "kayak",
+]
+# NOTE: no "License :: OSI Approved :: ..." classifier on purpose — under PEP 639
+# the SPDX `license` string above is the source of truth, and setuptools>=77
+# rejects a build that declares both.
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+]
 dependencies = []
 
 [project.urls]
 Homepage = "https://github.com/thorwhalen/farepy"
+Documentation = "https://thorwhalen.github.io/farepy/"
 Repository = "https://github.com/thorwhalen/farepy"
 Issues = "https://github.com/thorwhalen/farepy/issues"
 
