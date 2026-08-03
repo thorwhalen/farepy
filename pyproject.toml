@@ -56,6 +56,32 @@ dev = ["pytest"]
 [tool.setuptools.packages.find]
 where = ["."]
 
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+exclude = [
+    "**/*.ipynb",
+    ".git",
+    ".venv",
+    "build",
+    "dist",
+    "tests",
+    "examples",
+    "scrap",
+]
+
+[tool.ruff.lint]
+select = ["D100"]
+ignore = ["D203", "E501", "B905"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/*" = ["D"]
+"**/examples/*" = ["D"]
+"**/scrap/*" = ["D"]
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 # The package dir is listed explicitly: wads CI runs `pytest --doctest-modules`
