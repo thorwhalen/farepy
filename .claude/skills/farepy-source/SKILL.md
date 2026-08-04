@@ -51,7 +51,7 @@ from farepy.base import FlightOffer, Itinerary, SearchRequest, Segment
 
 
 class TransaviaSource:
-    name = 'transavia'
+    name = "transavia"
 
     def __init__(self, **_kwargs):
         # Accept **_kwargs so make_source() can pass arbitrary config.
@@ -63,9 +63,10 @@ class TransaviaSource:
         # Do NOT check API key validity here — just import availability.
         try:
             import httpx  # noqa: F401
-            return True, 'Transavia source ready.'
+
+            return True, "Transavia source ready."
         except ImportError:
-            return False, 'httpx not installed. Run: pip install httpx'
+            return False, "httpx not installed. Run: pip install httpx"
 
     def search(self, request: SearchRequest) -> list[FlightOffer]:
         # Import the dependency lazily (inside the method).
@@ -82,21 +83,21 @@ class TransaviaSource:
         #   request.max_results     — int
 
         response = httpx.get(
-            'https://api.transavia.com/v3/flights',
+            "https://api.transavia.com/v3/flights",
             params={
-                'origin': request.origin,
-                'destination': request.destination,
-                'departureDate': request.departure_date,
-                'adults': request.adults,
+                "origin": request.origin,
+                "destination": request.destination,
+                "departureDate": request.departure_date,
+                "adults": request.adults,
             },
-            headers={'apiKey': 'YOUR_KEY'},
+            headers={"apiKey": "YOUR_KEY"},
             timeout=30,
         )
         response.raise_for_status()
         data = response.json()
 
         # Convert each result to a FlightOffer
-        return [_convert(item, request) for item in data.get('flights', [])]
+        return [_convert(item, request) for item in data.get("flights", [])]
 
 
 def _convert(item: dict, request: SearchRequest) -> FlightOffer:
@@ -104,26 +105,26 @@ def _convert(item: dict, request: SearchRequest) -> FlightOffer:
     outbound = Itinerary(
         segments=[
             Segment(
-                departure_airport=item['departureAirport'],
-                arrival_airport=item['arrivalAirport'],
-                departure_time=item['departureDateTime'],
-                arrival_time=item.get('arrivalDateTime', ''),
-                carrier='TO',                           # IATA code
-                carrier_name='Transavia',
-                flight_number=item.get('flightNumber'),
-                duration_minutes=item.get('durationMinutes'),
+                departure_airport=item["departureAirport"],
+                arrival_airport=item["arrivalAirport"],
+                departure_time=item["departureDateTime"],
+                arrival_time=item.get("arrivalDateTime", ""),
+                carrier="TO",  # IATA code
+                carrier_name="Transavia",
+                flight_number=item.get("flightNumber"),
+                duration_minutes=item.get("durationMinutes"),
             )
         ],
-        duration_minutes=item.get('durationMinutes'),
+        duration_minutes=item.get("durationMinutes"),
     )
 
     return FlightOffer(
-        source='transavia',
+        source="transavia",
         outbound=outbound,
-        price=float(item['price']),
+        price=float(item["price"]),
         currency=request.currency,
-        airlines=['TO'],
-        raw=item,                                       # preserve raw data
+        airlines=["TO"],
+        raw=item,  # preserve raw data
     )
 ```
 
@@ -138,10 +139,10 @@ from farepy.sources.kayak_source import KayakSource
 from farepy.sources.transavia_source import TransaviaSource  # new
 
 ALL_SOURCES = {
-    'google_flights': GoogleFlightsSource,
-    'ryanair': RyanairSource,
-    'kayak': KayakSource,
-    'transavia': TransaviaSource,  # new
+    "google_flights": GoogleFlightsSource,
+    "ryanair": RyanairSource,
+    "kayak": KayakSource,
+    "transavia": TransaviaSource,  # new
 }
 ```
 
@@ -165,11 +166,11 @@ from farepy import available_sources, search_flights
 
 # Check it shows up
 for s in available_sources():
-    print(s['name'], s['available'])
+    print(s["name"], s["available"])
 
 # Test a search
-result = search_flights('AMS-BCN', '2026-07-01', sources=['transavia'])
-print(len(result['offers']), 'offers')
+result = search_flights("AMS-BCN", "2026-07-01", sources=["transavia"])
+print(len(result["offers"]), "offers")
 ```
 
 ## The data model
@@ -223,12 +224,15 @@ optional dep isn't installed:
 # GOOD
 def search(self, request):
     from ryanair import Ryanair
+
     ...
+
 
 # BAD — crashes on import if ryanair-py isn't installed
 from ryanair import Ryanair
-class RyanairSource:
-    ...
+
+
+class RyanairSource: ...
 ```
 
 ### Accept **_kwargs in __init__

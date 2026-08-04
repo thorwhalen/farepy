@@ -26,6 +26,7 @@ Each source is an optional dependency. Check what's available:
 
 ```python
 from farepy import available_sources
+
 for s in available_sources():
     print(f"{s['name']}: {'ready' if s['available'] else s['message']}")
 ```
@@ -38,22 +39,23 @@ This is the main entry point. Two positional args, everything else keyword-only.
 from farepy import search_flights
 
 # One-way search, all available sources
-result = search_flights('MRS-REK', '2026-07-01')
+result = search_flights("MRS-REK", "2026-07-01")
 
 # Round-trip
-result = search_flights('DUB-STN', '2026-07-01', return_date='2026-07-08')
+result = search_flights("DUB-STN", "2026-07-01", return_date="2026-07-08")
 
 # Specific sources only
-result = search_flights('DUB-STN', '2026-07-01', sources=['google_flights', 'ryanair'])
+result = search_flights("DUB-STN", "2026-07-01", sources=["google_flights", "ryanair"])
 
 # With filters
 result = search_flights(
-    'MRS-REK', '2026-07-01',
-    currency='USD',
+    "MRS-REK",
+    "2026-07-01",
+    currency="USD",
     adults=2,
     non_stop=True,
-    outbound_departure_after='06:00',
-    outbound_departure_before='14:00',
+    outbound_departure_after="06:00",
+    outbound_departure_before="14:00",
 )
 ```
 
@@ -107,14 +109,16 @@ Offers are sorted by price (cheapest first).
 ### Iterating results
 
 ```python
-result = search_flights('DUB-STN', '2026-07-01')
+result = search_flights("DUB-STN", "2026-07-01")
 
-for offer in result['offers']:
-    seg = offer['outbound']['segments'][0]
-    print(f"{offer['price']} {offer['currency']}  "
-          f"{offer['source']}  "
-          f"{seg.get('departure_time', '')[:16]}  "
-          f"{offer['airlines']}")
+for offer in result["offers"]:
+    seg = offer["outbound"]["segments"][0]
+    print(
+        f"{offer['price']} {offer['currency']}  "
+        f"{offer['source']}  "
+        f"{seg.get('departure_time', '')[:16]}  "
+        f"{offer['airlines']}"
+    )
 ```
 
 ### Checking for failures
@@ -122,9 +126,9 @@ for offer in result['offers']:
 Always check `sources_failed` — a source might be down or blocked:
 
 ```python
-result = search_flights('DUB-STN', '2026-07-01')
-if result['sources_failed']:
-    for source, error in result['sources_failed'].items():
+result = search_flights("DUB-STN", "2026-07-01")
+if result["sources_failed"]:
+    for source, error in result["sources_failed"].items():
         print(f"Warning: {source} failed: {error}")
 ```
 
@@ -150,16 +154,16 @@ Search multiple routes and/or dates in one call.
 from farepy import batch_search
 
 results = batch_search(
-    legs=['MRS-REK', 'CDG-KEF', 'DUB-STN'],
-    departure_dates=['2026-07-01', '2026-07-02'],
-    return_dates=['2026-07-08'],
+    legs=["MRS-REK", "CDG-KEF", "DUB-STN"],
+    departure_dates=["2026-07-01", "2026-07-02"],
+    return_dates=["2026-07-08"],
 )
 # Returns 6 SearchResult dicts (3 legs x 2 dates x 1 return date)
 
 for r in results:
-    req = r['request']
-    best = r['offers'][0] if r['offers'] else None
-    price = f"{best['price']} {best['currency']}" if best else 'no results'
+    req = r["request"]
+    best = r["offers"][0] if r["offers"] else None
+    price = f"{best['price']} {best['currency']}" if best else "no results"
     print(f"{req['origin']}-{req['destination']} {req['departure_date']}: {price}")
 ```
 
@@ -187,13 +191,13 @@ route/date combo with different time filters reuses the same cached data.
 
 ```python
 # Disable caching for a single search
-result = search_flights('MRS-REK', '2026-07-01', use_cache=False)
+result = search_flights("MRS-REK", "2026-07-01", use_cache=False)
 
 # Shorter TTL (1 hour)
-result = search_flights('MRS-REK', '2026-07-01', cache_ttl_hours=1)
+result = search_flights("MRS-REK", "2026-07-01", cache_ttl_hours=1)
 
 # Custom cache directory
-result = search_flights('MRS-REK', '2026-07-01', cache_dir='/tmp/flights')
+result = search_flights("MRS-REK", "2026-07-01", cache_dir="/tmp/flights")
 ```
 
 ### Inspecting and managing the cache
@@ -203,12 +207,14 @@ from farepy import list_cached_searches, get_cached_result, clear_cache
 
 # List cached searches
 for entry in list_cached_searches():
-    print(f"{entry['origin']}-{entry['destination']}  "
-          f"{entry['departure_date']}  "
-          f"({entry['num_offers']} offers, {entry['searched_at']})")
+    print(
+        f"{entry['origin']}-{entry['destination']}  "
+        f"{entry['departure_date']}  "
+        f"({entry['num_offers']} offers, {entry['searched_at']})"
+    )
 
 # Retrieve a specific cached result by ID
-result = get_cached_result(entry['cache_id'])
+result = get_cached_result(entry["cache_id"])
 
 # Clear all cache
 info = clear_cache()
