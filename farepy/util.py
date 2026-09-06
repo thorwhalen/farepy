@@ -2,7 +2,7 @@
 
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 def parse_iso_duration(duration: str) -> int | None:
@@ -108,5 +108,18 @@ def check_api_key(
 
 
 def now_iso() -> str:
-    """Return current UTC time as ISO 8601 string."""
-    return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    r"""Return current UTC time as ISO 8601 string.
+
+    The format is fixed: second precision with a literal trailing ``Z``, never
+    a numeric offset. Callers stamp it onto ``SearchResult.searched_at`` and
+    the cache parses it back, so the shape must not drift -- and the clock call
+    behind it must not be a deprecated one.
+
+    >>> import re, warnings
+    >>> with warnings.catch_warnings():
+    ...     warnings.simplefilter("error", DeprecationWarning)
+    ...     s = now_iso()
+    >>> bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", s))
+    True
+    """
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
