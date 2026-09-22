@@ -16,7 +16,7 @@ class KayakSource:
 
     def is_available(self) -> tuple[bool, str]:
         try:
-            from playwright.sync_api import sync_playwright  # noqa: F401
+            from playwright.sync_api import sync_playwright
         except ImportError:
             return False, (
                 "Playwright not installed. Run: pip install playwright && "
