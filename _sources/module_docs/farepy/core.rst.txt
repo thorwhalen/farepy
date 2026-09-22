@@ -1,4 +1,0 @@
-farepy.core
-===========
-.. automodule:: farepy.core
-   :members:

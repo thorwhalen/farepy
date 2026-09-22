@@ -1,0 +1,12 @@
+farepy.core
+===========
+
+.. automodule:: farepy.core
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      search_flights
+   

@@ -1,4 +1,0 @@
-farepy.sources.ryanair_source
-=============================
-.. automodule:: farepy.sources.ryanair_source
-   :members:

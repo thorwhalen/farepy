@@ -1,0 +1,18 @@
+﻿farepy
+======
+
+.. automodule:: farepy
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   base
+   batch
+   cache
+   core
+   sources
+   util

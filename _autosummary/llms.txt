@@ -1,0 +1,21 @@
+# farepy
+
+> Multi-source flight search with normalized results, caching, and batch support
+
+
+## Pages in this subsection
+
+- [farepy](farepy.html.md): farepy – Multi-source flight search with normalized results, caching, and batch support.
+- [farepy.base](farepy.base.html.md): Normalized data model for multi-source flight search.
+- [farepy.batch](farepy.batch.html.md): Batch flight search – cartesian combinations and file parsing.
+- [farepy.cache](farepy.cache.html.md): JSON file-based caching for flight search results.
+- [farepy.core](farepy.core.html.md): Search orchestration – the main entry point for flight searches.
+- [farepy.sources](farepy.sources.html.md): Flight data source registry.
+- [farepy.sources.google_flights_source](farepy.sources.google_flights_source.html.md): Google Flights source via the fast-flights library.
+- [farepy.sources.kayak_source](farepy.sources.kayak_source.html.md): Kayak flight search adapter using playwright browser automation.
+- [farepy.sources.ryanair_source](farepy.sources.ryanair_source.html.md): Ryanair source via the ryanair-py library.
+- [farepy.util](farepy.util.html.md): Internal utilities for farepy.
+
+## Optional
+
+- [Top-level llms.txt](../llms.txt): Complete documentation index.

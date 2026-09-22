@@ -1,0 +1,12 @@
+farepy.sources.kayak\_source
+============================
+
+.. automodule:: farepy.sources.kayak_source
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      KayakSource
+   

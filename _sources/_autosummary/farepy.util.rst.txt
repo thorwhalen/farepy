@@ -1,0 +1,18 @@
+farepy.util
+===========
+
+.. automodule:: farepy.util
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      check_api_key
+      extract_time
+      now_iso
+      parse_iso_duration
+      parse_leg
+      reformat_date
+      time_in_range
+   

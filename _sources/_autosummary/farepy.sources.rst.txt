@@ -1,0 +1,22 @@
+farepy.sources
+==============
+
+.. automodule:: farepy.sources
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      available_sources
+      make_source
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   google_flights_source
+   kayak_source
+   ryanair_source

@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-09-22T13:01:58Z",
+  "package": {
+    "name": "farepy",
+    "version": "0.1.7",
+    "display_name": "farepy",
+    "source": "pyproject.toml"
+  },
+  "git": {
+    "available": true,
+    "commit": "686703309381de0833efff7408683486ba222c19",
+    "short_commit": "6867033",
+    "branch": "main",
+    "tags": [
+      "0.1.7"
+    ],
+    "dirty": false,
+    "remote_url": "https://github.com/thorwhalen/farepy",
+    "commit_url": "https://github.com/thorwhalen/farepy/commit/686703309381de0833efff7408683486ba222c19",
+    "error": null
+  },
+  "ci": {
+    "provider": "github",
+    "repository": "thorwhalen/farepy",
+    "sha": "9b5df6bed7323a1cef1d19247be388875674abb6",
+    "sha_in_history": true,
+    "ref": "refs/heads/main",
+    "ref_name": "main",
+    "run_id": "35730625441",
+    "run_url": "https://github.com/thorwhalen/farepy/actions/runs/35730625441",
+    "server_url": "https://github.com"
+  },
+  "tools": {
+    "epythet": "0.2.12",
+    "sphinx": "9.1.0",
+    "docutils": "0.22.4",
+    "python": "3.12.14"
+  },
+  "config": {
+    "theme": "auto",
+    "html_theme": "shibuya",
+    "accent": "#006d64",
+    "mode": "auto",
+    "api_generator": "autosummary",
+    "ignore": [
+      "tests/",
+      "scrap/",
+      "examples/"
+    ],
+    "agent_outputs": true,
+    "aggregates": [
+      "md"
+    ],
+    "ai_artifacts": true,
+    "provenance": true,
+    "docs_dir": "docsrc"
+  },
+  "site": {
+    "modules_documented": 10,
+    "objects_documented": 27
+  },
+  "pypi": {
+    "checked": true,
+    "latest": "0.1.7",
+    "relation": "same",
+    "error": null
+  },
+  "reproduce": "git clone https://github.com/thorwhalen/farepy && cd farepy\ngit checkout 686703309381de0833efff7408683486ba222c19\npip install \"epythet==0.2.12\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "warnings": [],
+  "alignment": {
+    "aligned": true,
+    "notes": []
+  }
+}

@@ -1,0 +1,12 @@
+farepy.sources.google\_flights\_source
+======================================
+
+.. automodule:: farepy.sources.google_flights_source
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      GoogleFlightsSource
+   

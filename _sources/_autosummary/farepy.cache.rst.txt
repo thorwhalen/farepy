@@ -1,0 +1,17 @@
+farepy.cache
+============
+
+.. automodule:: farepy.cache
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      cache_key
+      clear_cache
+      get_cached
+      get_cached_result
+      list_cached_searches
+      put_cache
+   

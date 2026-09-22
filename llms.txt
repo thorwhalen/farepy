@@ -1,0 +1,29 @@
+# farepy
+
+> Multi-source flight search with normalized results, caching, and batch support
+
+
+## Pages
+
+- [farepy](index.html.md): Multi-source flight search with normalized results, caching, and batch support.
+- [API reference](api.html.md): | &#96;farepy&#96;   | farepy -- Multi-source flight search with normalized results, caching, and batch supp...
+- [farepy](_autosummary/farepy.html.md): farepy – Multi-source flight search with normalized results, caching, and batch support.
+- [farepy.base](_autosummary/farepy.base.html.md): Normalized data model for multi-source flight search.
+- [farepy.batch](_autosummary/farepy.batch.html.md): Batch flight search – cartesian combinations and file parsing.
+- [farepy.cache](_autosummary/farepy.cache.html.md): JSON file-based caching for flight search results.
+- [farepy.core](_autosummary/farepy.core.html.md): Search orchestration – the main entry point for flight searches.
+- [farepy.sources](_autosummary/farepy.sources.html.md): Flight data source registry.
+- [farepy.sources.google_flights_source](_autosummary/farepy.sources.google_flights_source.html.md): Google Flights source via the fast-flights library.
+- [farepy.sources.kayak_source](_autosummary/farepy.sources.kayak_source.html.md): Kayak flight search adapter using playwright browser automation.
+- [farepy.sources.ryanair_source](_autosummary/farepy.sources.ryanair_source.html.md): Ryanair source via the ryanair-py library.
+- [farepy.util](_autosummary/farepy.util.html.md): Internal utilities for farepy.
+- [For AI agents](ai-agents.html.md): &#96;farepy&#96; ships artifacts for coding agents alongside its code. This page lists
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-09-22 13:01 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
+
+## Optional
+
+- [farepy.md](farepy.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

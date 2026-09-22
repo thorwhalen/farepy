@@ -1,0 +1,14 @@
+farepy.batch
+============
+
+.. automodule:: farepy.batch
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      batch_from_file
+      batch_search
+      parse_batch_file
+   

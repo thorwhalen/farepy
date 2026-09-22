@@ -1,0 +1,12 @@
+farepy.sources.ryanair\_source
+==============================
+
+.. automodule:: farepy.sources.ryanair_source
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      RyanairSource
+   

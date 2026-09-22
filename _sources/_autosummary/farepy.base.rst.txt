@@ -1,0 +1,17 @@
+farepy.base
+===========
+
+.. automodule:: farepy.base
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      FlightOffer
+      FlightSource
+      Itinerary
+      SearchRequest
+      SearchResult
+      Segment
+   
