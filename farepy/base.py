@@ -16,7 +16,8 @@ class Segment:
     times at the same airport (e.g. filtering departures from one origin); a
     departure and an arrival in different zones cannot be subtracted to get a
     flight time -- use ``duration_minutes`` for that. ``SearchResult.searched_at``
-    is the one timestamp that is UTC (see :func:`farepy.util.now_iso`).
+    is the one timestamp that is UTC (see :func:`farepy.util.now_iso`). A source
+    that does not report a time leaves it as ``""``.
     """
 
     departure_airport: str  # IATA code, e.g. "MRS"
