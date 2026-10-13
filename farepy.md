@@ -1,4 +1,4 @@
-> built 2026-09-22 13:01 UTC from 6867033 (main) · farepy 0.1.7. Details: build_info.json
+> built 2026-10-13 22:18 UTC from 696d427 (main) · farepy 0.1.8. Details: build_info.json
 
 # index.html.md
 
@@ -261,6 +261,17 @@ Container for search results with metadata.
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 A single flight leg (one takeoff-to-landing).
+
+\*\*Times are local wall-clock times at the airport they refer to, with no
+zone\*\* (`departure_time` at `departure_airport`, `arrival_time` at
+`arrival_airport`), which is how airlines and every source publish them.
+They are naive on purpose: attaching a zone would need an airport-to-zone
+table this package does not carry. So compare or sort them only against
+times at the same airport (e.g. filtering departures from one origin); a
+departure and an arrival in different zones cannot be subtracted to get a
+flight time – use `duration_minutes` for that. `SearchResult.searched_at`
+is the one timestamp that is UTC (see [`farepy.util.now_iso()`](_autosummary/farepy.util.html.md#farepy.util.now_iso)). A source
+that does not report a time leaves it as `""`.
 
 
 # _autosummary/farepy.batch.html.md
@@ -652,7 +663,7 @@ False
 
 # About this build
 
-This documentation was built on **2026-09-22 13:01 UTC** from commit <a href="https://github.com/thorwhalen/farepy/commit/686703309381de0833efff7408683486ba222c19"><code>6867033</code></a> on branch <code>main</code>, for **farepy 0.1.7** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-10-13 22:18 UTC** from commit <a href="https://github.com/thorwhalen/farepy/commit/696d4272a67bdb53fa189a455af78d86afcffc93"><code>696d427</code></a> on branch <code>main</code>, for **farepy 0.1.8** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -661,9 +672,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                          |
 |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/farepy/commit/686703309381de0833efff7408683486ba222c19"><code>686703309381de0833efff7408683486ba222c19</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/farepy/commit/696d4272a67bdb53fa189a455af78d86afcffc93"><code>696d4272a67bdb53fa189a455af78d86afcffc93</code></a> |
 | Branch              | <code>main</code>                                                                                                                                        |
-| Tags at this commit | <code>0.1.7</code>                                                                                                                                       |
+| Tags at this commit | <code>0.1.8</code>                                                                                                                                       |
 | Working tree        | clean                                                                                                                                                    |
 | Remote              | <code>https://github.com/thorwhalen/farepy</code>                                                                                                        |
 
@@ -672,18 +683,18 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/farepy</code>                                                             |
-| Run          | <a href="https://github.com/thorwhalen/farepy/actions/runs/35730625441">35730625441</a>    |
+| Run          | <a href="https://github.com/thorwhalen/farepy/actions/runs/38476716491">38476716491</a>    |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>9b5df6bed7323a1cef1d19247be388875674abb6</code> (in the history of the built commit) |
+| Event commit | <code>77c8094502987dadf717a767a3d55d1b94762c66</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.12  |
+| epythet  | 0.2.17  |
 | Sphinx   | 9.1.0   |
 | docutils | 0.22.4  |
-| Python   | 3.12.14 |
+| Python   | 3.12.15 |
 
 ## Configuration as resolved
 
@@ -699,14 +710,14 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/farepy/0.1.7/">0.1.7</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/farepy/0.1.8/">0.1.8</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/farepy && cd farepy
-git checkout 686703309381de0833efff7408683486ba222c19
-pip install "epythet==0.2.12"
+git checkout 696d4272a67bdb53fa189a455af78d86afcffc93
+pip install "epythet==0.2.17"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 

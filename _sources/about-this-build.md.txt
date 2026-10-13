@@ -5,7 +5,7 @@ orphan: true
 
 # About this build
 
-This documentation was built on **2026-09-22 13:01 UTC** from commit <a href="https://github.com/thorwhalen/farepy/commit/686703309381de0833efff7408683486ba222c19"><code>6867033</code></a> on branch <code>main</code>, for **farepy 0.1.7** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-10-13 22:18 UTC** from commit <a href="https://github.com/thorwhalen/farepy/commit/696d4272a67bdb53fa189a455af78d86afcffc93"><code>696d427</code></a> on branch <code>main</code>, for **farepy 0.1.8** (from <code>pyproject.toml</code>).
 
 :::{note}
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -15,9 +15,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 | | |
 |---|---|
-| Commit | <a href="https://github.com/thorwhalen/farepy/commit/686703309381de0833efff7408683486ba222c19"><code>686703309381de0833efff7408683486ba222c19</code></a> |
+| Commit | <a href="https://github.com/thorwhalen/farepy/commit/696d4272a67bdb53fa189a455af78d86afcffc93"><code>696d4272a67bdb53fa189a455af78d86afcffc93</code></a> |
 | Branch | <code>main</code> |
-| Tags at this commit | <code>0.1.7</code> |
+| Tags at this commit | <code>0.1.8</code> |
 | Working tree | clean |
 | Remote | <code>https://github.com/thorwhalen/farepy</code> |
 
@@ -26,18 +26,18 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 | | |
 |---|---|
 | Repository | <code>thorwhalen/farepy</code> |
-| Run | <a href="https://github.com/thorwhalen/farepy/actions/runs/35730625441">35730625441</a> |
+| Run | <a href="https://github.com/thorwhalen/farepy/actions/runs/38476716491">38476716491</a> |
 | Ref | <code>refs/heads/main</code> |
-| Event commit | <code>9b5df6bed7323a1cef1d19247be388875674abb6</code> (in the history of the built commit) |
+| Event commit | <code>77c8094502987dadf717a767a3d55d1b94762c66</code> (in the history of the built commit) |
 
 ## Tools
 
 | | |
 |---|---|
-| epythet | 0.2.12 |
+| epythet | 0.2.17 |
 | Sphinx | 9.1.0 |
 | docutils | 0.22.4 |
-| Python | 3.12.14 |
+| Python | 3.12.15 |
 
 ## Configuration as resolved
 
@@ -53,14 +53,14 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/farepy/0.1.7/">0.1.7</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/farepy/0.1.8/">0.1.8</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/farepy && cd farepy
-git checkout 686703309381de0833efff7408683486ba222c19
-pip install "epythet==0.2.12"
+git checkout 696d4272a67bdb53fa189a455af78d86afcffc93
+pip install "epythet==0.2.17"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 

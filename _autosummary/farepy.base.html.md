@@ -61,3 +61,14 @@ Container for search results with metadata.
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 A single flight leg (one takeoff-to-landing).
+
+\*\*Times are local wall-clock times at the airport they refer to, with no
+zone\*\* (`departure_time` at `departure_airport`, `arrival_time` at
+`arrival_airport`), which is how airlines and every source publish them.
+They are naive on purpose: attaching a zone would need an airport-to-zone
+table this package does not carry. So compare or sort them only against
+times at the same airport (e.g. filtering departures from one origin); a
+departure and an arrival in different zones cannot be subtracted to get a
+flight time – use `duration_minutes` for that. `SearchResult.searched_at`
+is the one timestamp that is UTC (see [`farepy.util.now_iso()`](farepy.util.html.md#farepy.util.now_iso)). A source
+that does not report a time leaves it as `""`.
