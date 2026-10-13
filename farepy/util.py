@@ -33,6 +33,7 @@ def reformat_date(date_str: str, *, to_kiwi: bool = False) -> str:
     >>> reformat_date('18/04/2026')
     '2026-04-18'
     """
+    # Naive on purpose: a calendar date is reformatted, never placed in a zone.
     if to_kiwi:
         dt = datetime.strptime(date_str, "%Y-%m-%d")
         return dt.strftime("%d/%m/%Y")

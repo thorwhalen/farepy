@@ -1,11 +1,18 @@
 """Kayak flight search adapter using playwright browser automation."""
 
+import logging
 import re
 import time
 
 from farepy.base import FlightOffer, Itinerary, SearchRequest, Segment
 
 KAYAK_BASE = "https://www.kayak.com/flights"
+
+# A scraper that swallows errors silently makes "no flights" indistinguishable
+# from "Kayak changed its markup" (thorwhalen/farepy#1). The per-attempt misses
+# below are expected and logged at DEBUG; the outcomes that point at a broken
+# selector are logged at WARNING.
+logger = logging.getLogger(__name__)
 
 
 class KayakSource:
@@ -26,7 +33,8 @@ class KayakSource:
         try:
             with sync_playwright() as p:
                 p.chromium.executable_path  # noqa: B018
-        except Exception:
+        except Exception as e:
+            logger.debug("Kayak: chromium check failed: %r", e)
             return False, (
                 "Chromium browser not installed for playwright. "
                 "Run: playwright install chromium"
@@ -102,10 +110,17 @@ def _scrape_results(
                 page.wait_for_selector(selector, timeout=timeout_seconds * 1000)
                 loaded = True
                 break
-            except Exception:
+            except Exception as e:
+                logger.debug("Kayak: results selector %r not found: %r", selector, e)
                 continue
 
         if not loaded:
+            logger.warning(
+                "Kayak: none of the results selectors %s appeared within %ss; "
+                "falling back to a fixed wait (the page markup may have changed)",
+                result_selectors,
+                timeout_seconds,
+            )
             # Last resort: wait a fixed time for dynamic content
             time.sleep(10)
 
@@ -120,8 +135,9 @@ def _scrape_results(
                 if btn:
                     btn.click()
                     time.sleep(0.5)
-            except Exception:
-                pass
+            except Exception as e:
+                # Overlays are optional; failing to close one is not an error.
+                logger.debug("Kayak: could not dismiss %r: %r", dismiss_sel, e)
 
         # Scroll to load more results
         for _ in range(3):
@@ -152,14 +168,31 @@ def _extract_offers(page, request: SearchRequest) -> list[FlightOffer]:
             '[class*="resultWrapper"], [class*="Flights-Results-FlightResultItem"]'
         )
 
+    if not cards:
+        logger.warning(
+            "Kayak: no result cards matched any known selector; the page "
+            "markup may have changed, or the search has no results"
+        )
+
+    failed = 0
     for card in cards:
         try:
             offer = _parse_card(card, request)
             if offer:
                 offers.append(offer)
         except Exception:
+            failed += 1
+            logger.debug("Kayak: could not parse a result card", exc_info=True)
             continue
 
+    if failed:
+        logger.warning(
+            "Kayak: %d of %d result cards could not be parsed (stale selectors?); "
+            "returning the %d that could",
+            failed,
+            len(cards),
+            len(offers),
+        )
     return offers
 
 
