@@ -94,6 +94,7 @@ def _convert_flight(flight, request: SearchRequest) -> FlightOffer | None:
     if flight.arrival_time_ahead and "+" in flight.arrival_time_ahead:
         try:
             days_ahead = int(flight.arrival_time_ahead.replace("+", "").strip())
+            # Naive by design: a calendar date, local at the airport (see Segment).
             base = datetime.strptime(request.departure_date, "%Y-%m-%d")
             arr_date = (base + timedelta(days=days_ahead)).strftime("%Y-%m-%d")
         except (ValueError, TypeError):
@@ -184,6 +185,7 @@ def _parse_12h_time(time_str: str) -> str:
     m = re.search(r"(\d{1,2}:\d{2})\s*(AM|PM|am|pm)", time_str)
     if m:
         try:
+            # Only reformats a local clock time (12h -> 24h); no zone is implied.
             dt = datetime.strptime(f"{m.group(1)} {m.group(2).upper()}", "%I:%M %p")
             return dt.strftime("%H:%M")
         except ValueError:

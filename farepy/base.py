@@ -6,12 +6,24 @@ from typing import Protocol
 
 @dataclass
 class Segment:
-    """A single flight leg (one takeoff-to-landing)."""
+    """A single flight leg (one takeoff-to-landing).
+
+    **Times are local wall-clock times at the airport they refer to, with no
+    zone** (``departure_time`` at ``departure_airport``, ``arrival_time`` at
+    ``arrival_airport``), which is how airlines and every source publish them.
+    They are naive on purpose: attaching a zone would need an airport-to-zone
+    table this package does not carry. So compare or sort them only against
+    times at the same airport (e.g. filtering departures from one origin); a
+    departure and an arrival in different zones cannot be subtracted to get a
+    flight time -- use ``duration_minutes`` for that. ``SearchResult.searched_at``
+    is the one timestamp that is UTC (see :func:`farepy.util.now_iso`). A source
+    that does not report a time leaves it as ``""``.
+    """
 
     departure_airport: str  # IATA code, e.g. "MRS"
     arrival_airport: str  # IATA code, e.g. "REK"
-    departure_time: str  # ISO 8601: "2026-04-18T06:30:00"
-    arrival_time: str  # ISO 8601: "2026-04-18T10:45:00"
+    departure_time: str  # ISO 8601, local at departure_airport: "2026-04-18T06:30:00"
+    arrival_time: str  # ISO 8601, local at arrival_airport: "2026-04-18T10:45:00"
     carrier: str  # Airline IATA code, e.g. "FI"
     carrier_name: str | None = None  # Full name if available
     flight_number: str | None = None  # e.g. "FI543"
