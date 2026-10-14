@@ -213,62 +213,71 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="74"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span data-line="75"><span class="w">    </span><span class="sd">"""Check if a HH:MM time falls within the given range.</span>
 </span><span data-line="76">
-</span><span data-line="77"><span class="sd">    &gt;&gt;&gt; time_in_range('14:30', after='08:00', before='18:00')</span>
-</span><span data-line="78"><span class="sd">    True</span>
-</span><span data-line="79"><span class="sd">    &gt;&gt;&gt; time_in_range('06:00', after='08:00')</span>
-</span><span data-line="80"><span class="sd">    False</span>
-</span><span data-line="81"><span class="sd">    """</span>
-</span><span data-line="82">    <span class="k">if</span> <span class="n">after</span> <span class="ow">and</span> <span class="n">time_str</span> <span class="o">&lt;</span> <span class="n">after</span><span class="p">:</span>
-</span><span data-line="83">        <span class="k">return</span> <span class="kc">False</span>
-</span><span data-line="84">    <span class="k">if</span> <span class="n">before</span> <span class="ow">and</span> <span class="n">time_str</span> <span class="o">&gt;</span> <span class="n">before</span><span class="p">:</span>
-</span><span data-line="85">        <span class="k">return</span> <span class="kc">False</span>
-</span><span data-line="86">    <span class="k">return</span> <span class="kc">True</span></div>
+</span><span data-line="77"><span class="sd">    An unknown time (``""``, as a source that does not report arrivals emits)</span>
+</span><span data-line="78"><span class="sd">    cannot be judged, so it is kept rather than filtered out: comparing ``""``</span>
+</span><span data-line="79"><span class="sd">    with ``"08:00"`` used to drop every Ryanair offer under any arrival filter</span>
+</span><span data-line="80"><span class="sd">    (thorwhalen/farepy#6).</span>
+</span><span data-line="81">
+</span><span data-line="82"><span class="sd">    &gt;&gt;&gt; time_in_range('14:30', after='08:00', before='18:00')</span>
+</span><span data-line="83"><span class="sd">    True</span>
+</span><span data-line="84"><span class="sd">    &gt;&gt;&gt; time_in_range('06:00', after='08:00')</span>
+</span><span data-line="85"><span class="sd">    False</span>
+</span><span data-line="86"><span class="sd">    &gt;&gt;&gt; time_in_range('', after='08:00', before='18:00')</span>
+</span><span data-line="87"><span class="sd">    True</span>
+</span><span data-line="88"><span class="sd">    """</span>
+</span><span data-line="89">    <span class="k">if</span> <span class="ow">not</span> <span class="n">time_str</span><span class="p">:</span>
+</span><span data-line="90">        <span class="k">return</span> <span class="kc">True</span>
+</span><span data-line="91">    <span class="k">if</span> <span class="n">after</span> <span class="ow">and</span> <span class="n">time_str</span> <span class="o">&lt;</span> <span class="n">after</span><span class="p">:</span>
+</span><span data-line="92">        <span class="k">return</span> <span class="kc">False</span>
+</span><span data-line="93">    <span class="k">if</span> <span class="n">before</span> <span class="ow">and</span> <span class="n">time_str</span> <span class="o">&gt;</span> <span class="n">before</span><span class="p">:</span>
+</span><span data-line="94">        <span class="k">return</span> <span class="kc">False</span>
+</span><span data-line="95">    <span class="k">return</span> <span class="kc">True</span></div>
 
-</span><span data-line="87">
-</span><span data-line="88">
+</span><span data-line="96">
+</span><span data-line="97">
 <div class="viewcode-block" id="check_api_key">
 <a class="viewcode-back" href="../../_autosummary/farepy.util.html#farepy.util.check_api_key">[docs]</a>
-</span><span data-line="89"><span class="k">def</span><span class="w"> </span><span class="nf">check_api_key</span><span class="p">(</span>
-</span><span data-line="90">    <span class="n">env_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span data-line="91">    <span class="o">*</span><span class="p">,</span>
-</span><span data-line="92">    <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span data-line="93">    <span class="n">signup_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span data-line="94">    <span class="n">explicit_value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span data-line="95"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-</span><span data-line="96"><span class="w">    </span><span class="sd">"""Check for an API key, returning (value, message).</span>
-</span><span data-line="97">
-</span><span data-line="98"><span class="sd">    Checks explicit_value first, then the environment variable.</span>
-</span><span data-line="99"><span class="sd">    """</span>
-</span><span data-line="100">    <span class="n">value</span> <span class="o">=</span> <span class="n">explicit_value</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env_var</span><span class="p">)</span>
-</span><span data-line="101">    <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-</span><span data-line="102">        <span class="k">return</span> <span class="n">value</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2"> API key configured."</span>
-</span><span data-line="103">    <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
-</span><span data-line="104">        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2"> API key not configured. "</span>
-</span><span data-line="105">        <span class="sa">f</span><span class="s2">"Get one at </span><span class="si">{</span><span class="n">signup_url</span><span class="si">}</span><span class="s2"> . "</span>
-</span><span data-line="106">        <span class="sa">f</span><span class="s2">"Then set the </span><span class="si">{</span><span class="n">env_var</span><span class="si">}</span><span class="s2"> environment variable, "</span>
-</span><span data-line="107">        <span class="sa">f</span><span class="s2">"or pass it via the settings panel."</span>
-</span><span data-line="108">    <span class="p">)</span></div>
+</span><span data-line="98"><span class="k">def</span><span class="w"> </span><span class="nf">check_api_key</span><span class="p">(</span>
+</span><span data-line="99">    <span class="n">env_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span data-line="100">    <span class="o">*</span><span class="p">,</span>
+</span><span data-line="101">    <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span data-line="102">    <span class="n">signup_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span data-line="103">    <span class="n">explicit_value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span data-line="104"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span><span data-line="105"><span class="w">    </span><span class="sd">"""Check for an API key, returning (value, message).</span>
+</span><span data-line="106">
+</span><span data-line="107"><span class="sd">    Checks explicit_value first, then the environment variable.</span>
+</span><span data-line="108"><span class="sd">    """</span>
+</span><span data-line="109">    <span class="n">value</span> <span class="o">=</span> <span class="n">explicit_value</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env_var</span><span class="p">)</span>
+</span><span data-line="110">    <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+</span><span data-line="111">        <span class="k">return</span> <span class="n">value</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2"> API key configured."</span>
+</span><span data-line="112">    <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+</span><span data-line="113">        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2"> API key not configured. "</span>
+</span><span data-line="114">        <span class="sa">f</span><span class="s2">"Get one at </span><span class="si">{</span><span class="n">signup_url</span><span class="si">}</span><span class="s2"> . "</span>
+</span><span data-line="115">        <span class="sa">f</span><span class="s2">"Then set the </span><span class="si">{</span><span class="n">env_var</span><span class="si">}</span><span class="s2"> environment variable, "</span>
+</span><span data-line="116">        <span class="sa">f</span><span class="s2">"or pass it via the settings panel."</span>
+</span><span data-line="117">    <span class="p">)</span></div>
 
-</span><span data-line="109">
-</span><span data-line="110">
+</span><span data-line="118">
+</span><span data-line="119">
 <div class="viewcode-block" id="now_iso">
 <a class="viewcode-back" href="../../_autosummary/farepy.util.html#farepy.util.now_iso">[docs]</a>
-</span><span data-line="111"><span class="k">def</span><span class="w"> </span><span class="nf">now_iso</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span data-line="112"><span class="w">    </span><span class="sa">r</span><span class="sd">"""Return current UTC time as ISO 8601 string.</span>
-</span><span data-line="113">
-</span><span data-line="114"><span class="sd">    The format is fixed: second precision with a literal trailing ``Z``, never</span>
-</span><span data-line="115"><span class="sd">    a numeric offset. Callers stamp it onto ``SearchResult.searched_at`` and</span>
-</span><span data-line="116"><span class="sd">    the cache parses it back, so the shape must not drift -- and the clock call</span>
-</span><span data-line="117"><span class="sd">    behind it must not be a deprecated one.</span>
-</span><span data-line="118">
-</span><span data-line="119"><span class="sd">    &gt;&gt;&gt; import re, warnings</span>
-</span><span data-line="120"><span class="sd">    &gt;&gt;&gt; with warnings.catch_warnings():</span>
-</span><span data-line="121"><span class="sd">    ...     warnings.simplefilter("error", DeprecationWarning)</span>
-</span><span data-line="122"><span class="sd">    ...     s = now_iso()</span>
-</span><span data-line="123"><span class="sd">    &gt;&gt;&gt; bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", s))</span>
-</span><span data-line="124"><span class="sd">    True</span>
-</span><span data-line="125"><span class="sd">    """</span>
-</span><span data-line="126">    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%SZ"</span><span class="p">)</span></div>
+</span><span data-line="120"><span class="k">def</span><span class="w"> </span><span class="nf">now_iso</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span data-line="121"><span class="w">    </span><span class="sa">r</span><span class="sd">"""Return current UTC time as ISO 8601 string.</span>
+</span><span data-line="122">
+</span><span data-line="123"><span class="sd">    The format is fixed: second precision with a literal trailing ``Z``, never</span>
+</span><span data-line="124"><span class="sd">    a numeric offset. Callers stamp it onto ``SearchResult.searched_at`` and</span>
+</span><span data-line="125"><span class="sd">    the cache parses it back, so the shape must not drift -- and the clock call</span>
+</span><span data-line="126"><span class="sd">    behind it must not be a deprecated one.</span>
+</span><span data-line="127">
+</span><span data-line="128"><span class="sd">    &gt;&gt;&gt; import re, warnings</span>
+</span><span data-line="129"><span class="sd">    &gt;&gt;&gt; with warnings.catch_warnings():</span>
+</span><span data-line="130"><span class="sd">    ...     warnings.simplefilter("error", DeprecationWarning)</span>
+</span><span data-line="131"><span class="sd">    ...     s = now_iso()</span>
+</span><span data-line="132"><span class="sd">    &gt;&gt;&gt; bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", s))</span>
+</span><span data-line="133"><span class="sd">    True</span>
+</span><span data-line="134"><span class="sd">    """</span>
+</span><span data-line="135">    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%SZ"</span><span class="p">)</span></div>
 
 </span></pre></div>
         </article><button class="back-to-top" type="button">
@@ -297,7 +306,7 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </footer>
-      <script src="../../_static/documentation_options.js?v=22607128"></script>
+      <script src="../../_static/documentation_options.js?v=8618f531"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>

@@ -1,4 +1,4 @@
-> built 2026-10-13 22:18 UTC from 696d427 (main) · farepy 0.1.8. Details: build_info.json
+> built 2026-10-14 03:13 UTC from 068a178 (main) · farepy 0.1.9. Details: build_info.json
 
 # index.html.md
 
@@ -517,10 +517,19 @@ Create a source instance by name, passing config kwargs.
 
 Kayak flight search adapter using playwright browser automation.
 
+### Module Attributes
+
+| [`MISSING_BROWSER`](_autosummary/farepy.sources.kayak_source.html.md#farepy.sources.kayak_source.MISSING_BROWSER)   | What playwright's launch error says when the browser was never installed.   |
+|--------------------------------------------------------------------|-----------------------------------------------------------------------------|
+
 ### Classes
 
 | `KayakSource`(\*[, timeout])   |    |
 |--------------------------------|----|
+
+### farepy.sources.kayak_source.MISSING_BROWSER *= "Executable doesn't exist"*
+
+What playwright’s launch error says when the browser was never installed.
 
 
 # _autosummary/farepy.sources.ryanair_source.html.md
@@ -646,6 +655,11 @@ Convert between date formats.
 
 Check if a HH:MM time falls within the given range.
 
+An unknown time (`""`, as a source that does not report arrivals emits)
+cannot be judged, so it is kept rather than filtered out: comparing `""`
+with `"08:00"` used to drop every Ryanair offer under any arrival filter
+(thorwhalen/farepy#6).
+
 * **Return type:**
   [`bool`](https://docs.python.org/3/builtins/functions.html#bool)
 
@@ -654,6 +668,8 @@ Check if a HH:MM time falls within the given range.
 True
 >>> time_in_range('06:00', after='08:00')
 False
+>>> time_in_range('', after='08:00', before='18:00')
+True
 ```
 
 
@@ -663,7 +679,7 @@ False
 
 # About this build
 
-This documentation was built on **2026-10-13 22:18 UTC** from commit <a href="https://github.com/thorwhalen/farepy/commit/696d4272a67bdb53fa189a455af78d86afcffc93"><code>696d427</code></a> on branch <code>main</code>, for **farepy 0.1.8** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-10-14 03:13 UTC** from commit <a href="https://github.com/thorwhalen/farepy/commit/068a178dbe64584056375844025c16a6b0705dc4"><code>068a178</code></a> on branch <code>main</code>, for **farepy 0.1.9** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -672,9 +688,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                          |
 |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/thorwhalen/farepy/commit/696d4272a67bdb53fa189a455af78d86afcffc93"><code>696d4272a67bdb53fa189a455af78d86afcffc93</code></a> |
+| Commit              | <a href="https://github.com/thorwhalen/farepy/commit/068a178dbe64584056375844025c16a6b0705dc4"><code>068a178dbe64584056375844025c16a6b0705dc4</code></a> |
 | Branch              | <code>main</code>                                                                                                                                        |
-| Tags at this commit | <code>0.1.8</code>                                                                                                                                       |
+| Tags at this commit | <code>0.1.9</code>                                                                                                                                       |
 | Working tree        | clean                                                                                                                                                    |
 | Remote              | <code>https://github.com/thorwhalen/farepy</code>                                                                                                        |
 
@@ -683,9 +699,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>thorwhalen/farepy</code>                                                             |
-| Run          | <a href="https://github.com/thorwhalen/farepy/actions/runs/38476716491">38476716491</a>    |
+| Run          | <a href="https://github.com/thorwhalen/farepy/actions/runs/38504957656">38504957656</a>    |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>77c8094502987dadf717a767a3d55d1b94762c66</code> (in the history of the built commit) |
+| Event commit | <code>2dd1d1cb6d3f52111e5dbb462b940ff069110843</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -710,13 +726,13 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/farepy/0.1.8/">0.1.8</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/farepy/0.1.9/">0.1.9</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/thorwhalen/farepy && cd farepy
-git checkout 696d4272a67bdb53fa189a455af78d86afcffc93
+git checkout 068a178dbe64584056375844025c16a6b0705dc4
 pip install "epythet==0.2.17"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

@@ -101,6 +101,11 @@ Convert between date formats.
 
 Check if a HH:MM time falls within the given range.
 
+An unknown time (`""`, as a source that does not report arrivals emits)
+cannot be judged, so it is kept rather than filtered out: comparing `""`
+with `"08:00"` used to drop every Ryanair offer under any arrival filter
+(thorwhalen/farepy#6).
+
 * **Return type:**
   [`bool`](https://docs.python.org/3/builtins/functions.html#bool)
 
@@ -109,4 +114,6 @@ Check if a HH:MM time falls within the given range.
 True
 >>> time_in_range('06:00', after='08:00')
 False
+>>> time_in_range('', after='08:00', before='18:00')
+True
 ```

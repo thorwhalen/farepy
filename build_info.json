@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "built_at": "2026-10-13T22:18:49Z",
+  "built_at": "2026-10-14T03:13:14Z",
   "package": {
     "name": "farepy",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "display_name": "farepy",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "696d4272a67bdb53fa189a455af78d86afcffc93",
-    "short_commit": "696d427",
+    "commit": "068a178dbe64584056375844025c16a6b0705dc4",
+    "short_commit": "068a178",
     "branch": "main",
     "tags": [
-      "0.1.8"
+      "0.1.9"
     ],
     "dirty": false,
     "remote_url": "https://github.com/thorwhalen/farepy",
-    "commit_url": "https://github.com/thorwhalen/farepy/commit/696d4272a67bdb53fa189a455af78d86afcffc93",
+    "commit_url": "https://github.com/thorwhalen/farepy/commit/068a178dbe64584056375844025c16a6b0705dc4",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "thorwhalen/farepy",
-    "sha": "77c8094502987dadf717a767a3d55d1b94762c66",
+    "sha": "2dd1d1cb6d3f52111e5dbb462b940ff069110843",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "38476716491",
-    "run_url": "https://github.com/thorwhalen/farepy/actions/runs/38476716491",
+    "run_id": "38504957656",
+    "run_url": "https://github.com/thorwhalen/farepy/actions/runs/38504957656",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -58,15 +58,15 @@
   },
   "site": {
     "modules_documented": 10,
-    "objects_documented": 27
+    "objects_documented": 28
   },
   "pypi": {
     "checked": true,
-    "latest": "0.1.8",
+    "latest": "0.1.9",
     "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/thorwhalen/farepy && cd farepy\ngit checkout 696d4272a67bdb53fa189a455af78d86afcffc93\npip install \"epythet==0.2.17\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/thorwhalen/farepy && cd farepy\ngit checkout 068a178dbe64584056375844025c16a6b0705dc4\npip install \"epythet==0.2.17\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": true,

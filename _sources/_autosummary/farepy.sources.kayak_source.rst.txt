@@ -4,6 +4,12 @@ farepy.sources.kayak\_source
 .. automodule:: farepy.sources.kayak_source
 
    
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      MISSING_BROWSER
+   
    .. rubric:: Classes
 
    .. autosummary::
