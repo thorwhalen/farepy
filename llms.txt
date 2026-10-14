@@ -18,7 +18,7 @@
 - [farepy.sources.ryanair_source](_autosummary/farepy.sources.ryanair_source.html.md): Ryanair source via the ryanair-py library.
 - [farepy.util](_autosummary/farepy.util.html.md): Internal utilities for farepy.
 - [For AI agents](ai-agents.html.md): &#96;farepy&#96; ships artifacts for coding agents alongside its code. This page lists
-- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-10-14 03:13 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-10-14 05:03 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
 
 ## Optional
 

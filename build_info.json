@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "built_at": "2026-10-14T03:13:14Z",
+  "built_at": "2026-10-14T05:03:45Z",
   "package": {
     "name": "farepy",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "display_name": "farepy",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "068a178dbe64584056375844025c16a6b0705dc4",
-    "short_commit": "068a178",
+    "commit": "dc3185aea27a1e974c0939905cf758aa8fe5ff61",
+    "short_commit": "dc3185a",
     "branch": "main",
     "tags": [
-      "0.1.9"
+      "0.1.10"
     ],
     "dirty": false,
     "remote_url": "https://github.com/thorwhalen/farepy",
-    "commit_url": "https://github.com/thorwhalen/farepy/commit/068a178dbe64584056375844025c16a6b0705dc4",
+    "commit_url": "https://github.com/thorwhalen/farepy/commit/dc3185aea27a1e974c0939905cf758aa8fe5ff61",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "thorwhalen/farepy",
-    "sha": "2dd1d1cb6d3f52111e5dbb462b940ff069110843",
+    "sha": "04d8d20e9b3232722bc622a009e679e14dbaf520",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "38504957656",
-    "run_url": "https://github.com/thorwhalen/farepy/actions/runs/38504957656",
+    "run_id": "38514482544",
+    "run_url": "https://github.com/thorwhalen/farepy/actions/runs/38514482544",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -63,13 +63,15 @@
   "pypi": {
     "checked": true,
     "latest": "0.1.9",
-    "relation": "same",
+    "relation": "ahead",
     "error": null
   },
-  "reproduce": "git clone https://github.com/thorwhalen/farepy && cd farepy\ngit checkout 068a178dbe64584056375844025c16a6b0705dc4\npip install \"epythet==0.2.17\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/thorwhalen/farepy && cd farepy\ngit checkout dc3185aea27a1e974c0939905cf758aa8fe5ff61\npip install \"epythet==0.2.17\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
-    "aligned": true,
-    "notes": []
+    "aligned": false,
+    "notes": [
+      "The documented version (0.1.10) is ahead of the latest release on PyPI (0.1.9): these docs describe unreleased code."
+    ]
   }
 }
