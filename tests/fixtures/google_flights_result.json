@@ -1,0 +1,8 @@
+{
+  "current_price": "low",
+  "flights": [
+    {"is_best": true, "name": "Icelandair, Lufthansa", "departure": "10:30 PM on Sat, Apr 18", "arrival": "6:15 AM on Sun, Apr 19", "arrival_time_ahead": "+1", "duration": "7 hr 45 min", "stops": 1, "delay": null, "price": "€1,234"},
+    {"is_best": false, "name": "easyJet", "departure": "8:05 AM on Sat, Apr 18", "arrival": "11:40 AM on Sat, Apr 18", "arrival_time_ahead": "", "duration": "3 hr 35 min", "stops": 0, "delay": null, "price": "€89"},
+    {"is_best": false, "name": "Vueling", "departure": "1:00 PM on Sat, Apr 18", "arrival": "4:00 PM on Sat, Apr 18", "arrival_time_ahead": "", "duration": "3 hr", "stops": "Unknown", "delay": null, "price": "Price unavailable"}
+  ]
+}
