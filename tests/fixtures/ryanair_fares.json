@@ -1,0 +1,13 @@
+{
+  "one_way": [
+    {"departureTime": "2026-04-18T06:30:00", "flightNumber": "FR1234", "price": 39.99, "currency": "EUR", "origin": "MRS", "destination": "DUB"},
+    {"departureTime": "2026-04-18T18:05:00", "flightNumber": "FR1236", "price": 24.5, "currency": "EUR", "origin": "MRS", "destination": "DUB"}
+  ],
+  "return": [
+    {
+      "totalPrice": 81.48,
+      "outbound": {"departureTime": "2026-04-18T06:30:00", "flightNumber": "FR1234", "price": 39.99, "currency": "EUR", "origin": "MRS", "destination": "DUB"},
+      "inbound": {"departureTime": "2026-04-25T21:10:00", "flightNumber": "FR1235", "price": 41.49, "currency": "EUR", "origin": "DUB", "destination": "MRS"}
+    }
+  ]
+}

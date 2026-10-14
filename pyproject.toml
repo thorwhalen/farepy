@@ -86,7 +86,7 @@ convention = "google"
 minversion = "6.0"
 # The package dir is listed explicitly: wads CI runs `pytest --doctest-modules`
 # with no path argument, so collection is driven entirely by `testpaths`.
-testpaths = ["farepy"]
+testpaths = ["farepy", "tests"]
 # Mirrors the flags CI passes via `-o doctest_optionflags=...`, so a local run
 # behaves identically to the CI run.
 doctest_optionflags = ["ELLIPSIS", "IGNORE_EXCEPTION_DETAIL"]
