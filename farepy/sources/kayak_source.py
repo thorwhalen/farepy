@@ -348,7 +348,9 @@ def _arrival(departure_date: str, leg: tuple[str, str, int]) -> str:
     day (thorwhalen/farepy#6), the way ``google_flights_source`` already avoids.
     """
     try:
-        landed = (date.fromisoformat(departure_date) + timedelta(days=leg[2])).isoformat()
+        landed = (
+            date.fromisoformat(departure_date) + timedelta(days=leg[2])
+        ).isoformat()
     except ValueError:  # not YYYY-MM-DD: keep the date as given, as before
         landed = departure_date
     return f"{landed}T{leg[1]}:00"
