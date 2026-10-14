@@ -86,9 +86,15 @@ def test_twelve_hour_times_are_converted():
 # --- 3. Kayak.is_available says what actually failed ---------------------------
 
 
-def _fake_playwright(monkeypatch, *, start_error=None, executable=""):
+def _fake_playwright(monkeypatch, *, start_error=None, launch_error=None):
+    launched = []
+
     class _Chromium:
-        executable_path = executable
+        def launch(self, headless):
+            if launch_error:
+                raise launch_error
+            launched.append(headless)
+            return types.SimpleNamespace(close=lambda: None)
 
     class _Ctx:
         def __enter__(self):
@@ -103,6 +109,7 @@ def _fake_playwright(monkeypatch, *, start_error=None, executable=""):
     sync_api.sync_playwright = _Ctx
     monkeypatch.setitem(sys.modules, "playwright", types.ModuleType("playwright"))
     monkeypatch.setitem(sys.modules, "playwright.sync_api", sync_api)
+    return launched
 
 
 def test_a_startup_error_is_not_reported_as_a_missing_browser(monkeypatch):
@@ -113,14 +120,55 @@ def test_a_startup_error_is_not_reported_as_a_missing_browser(monkeypatch):
     assert "asyncio loop" in msg and "not installed" not in msg
 
 
-def test_a_missing_executable_is_reported_as_a_missing_browser(monkeypatch, tmp_path):
-    _fake_playwright(monkeypatch, executable=str(tmp_path / "no-chrome"))
+def test_a_missing_executable_is_reported_as_a_missing_browser(monkeypatch):
+    err = RuntimeError("BrowserType.launch: Executable doesn't exist at /x/headless_shell")
+    _fake_playwright(monkeypatch, launch_error=err)
     ok, msg = kayak_source.KayakSource().is_available()
     assert not ok and "playwright install chromium" in msg
 
 
-def test_an_installed_browser_is_available(monkeypatch, tmp_path):
-    exe = tmp_path / "chrome"
-    exe.write_text("")
-    _fake_playwright(monkeypatch, executable=str(exe))
+def test_another_launch_failure_says_what_it_was(monkeypatch):
+    _fake_playwright(monkeypatch, launch_error=RuntimeError("missing libnss3.so"))
+    ok, msg = kayak_source.KayakSource().is_available()
+    assert not ok and "libnss3" in msg and "not installed" not in msg
+
+
+def test_a_headless_launch_is_what_counts_as_available(monkeypatch):
+    """A headless-shell-only install works for search(), so it is available
+    (review of #7: executable_path names the full browser even when absent)."""
+    launched = _fake_playwright(monkeypatch)
     assert kayak_source.KayakSource().is_available()[0]
+    assert launched == [True]
+
+
+# --- review of #7: what is and is not a day marker ------------------------------
+
+
+def test_things_after_the_arrival_that_are_not_day_markers():
+    legs = kayak_source._extract_legs
+    assert legs(None, "07:10 – 09:40\n+ 1 stop")[0][2] == 0
+    assert legs(None, "07:10 – 09:40 +20 € bags")[0][2] == 0
+    assert legs(None, "07:10 – 09:40\n+2 airlines")[0][2] == 0
+    assert legs(None, "07:10 – 09:40\n+1 stop")[0][2] == 0
+    assert legs(None, "11:00 pm – 6:15 am-1")[0][2] == -1
+    assert legs(None, "11:00 pm – 6:15 am+1\nnonstop")[0][2] == 1
+
+
+def test_an_hour_past_twelve_ignores_a_meridiem():
+    assert kayak_source._to_24h("13:00", "pm") == "13:00"
+
+
+def test_a_date_that_is_not_iso_keeps_the_old_stamp():
+    assert kayak_source._arrival("2026/04/18", ("07:10", "09:40", 1)) == "2026/04/18T09:40:00"
+
+
+def test_an_unknown_inbound_time_is_kept_too():
+    request = SearchRequest(
+        origin="MRS", destination="DUB", departure_date="2026-04-18",
+        return_date="2026-04-25", inbound_arrival_before="18:00",
+    )
+    offer = {
+        "outbound": {"segments": [{"departure_time": "2026-04-18T06:30:00", "arrival_time": ""}]},
+        "inbound": {"segments": [{"departure_time": "2026-04-25T20:00:00", "arrival_time": ""}]},
+    }
+    assert _apply_time_filters([offer], request) == [offer]

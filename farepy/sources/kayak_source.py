@@ -1,7 +1,6 @@
 """Kayak flight search adapter using playwright browser automation."""
 
 import logging
-import os
 import re
 import time
 from datetime import date, timedelta
@@ -9,6 +8,8 @@ from datetime import date, timedelta
 from farepy.base import FlightOffer, Itinerary, SearchRequest, Segment
 
 KAYAK_BASE = "https://www.kayak.com/flights"
+#: What playwright's launch error says when the browser was never installed.
+MISSING_BROWSER = "Executable doesn't exist"
 
 # A scraper that swallows errors silently makes "no flights" indistinguishable
 # from "Kayak changed its markup" (thorwhalen/farepy#1). The per-attempt misses
@@ -31,21 +32,26 @@ class KayakSource:
                 "Playwright not installed. Run: pip install playwright && "
                 "playwright install chromium"
             )
-        # Starting playwright can fail for reasons that have nothing to do with
-        # the browser (e.g. the sync API called inside a running asyncio loop),
-        # so a failure here is reported as itself; only a missing executable
-        # is "Chromium not installed" (thorwhalen/farepy#6).
+        # Probe exactly what search() does: a headless launch. That is the only
+        # honest test, since headless runs playwright's separate headless shell,
+        # and ``executable_path`` names the full browser whether or not it is
+        # there. A failure is reported as itself; only a missing executable reads
+        # as "Chromium not installed" (thorwhalen/farepy#6).
         try:
             with sync_playwright() as p:
-                executable = p.chromium.executable_path
+                try:
+                    p.chromium.launch(headless=True).close()
+                except Exception as e:
+                    logger.debug("Kayak: chromium launch failed: %r", e)
+                    if MISSING_BROWSER in str(e):
+                        return False, (
+                            "Chromium browser not installed for playwright. "
+                            "Run: playwright install chromium"
+                        )
+                    return False, f"Chromium could not start: {type(e).__name__}: {e}"
         except Exception as e:
             logger.debug("Kayak: playwright start failed: %r", e)
             return False, f"Playwright could not start: {type(e).__name__}: {e}"
-        if not executable or not os.path.exists(executable):
-            return False, (
-                "Chromium browser not installed for playwright. "
-                "Run: playwright install chromium"
-            )
         return True, "Kayak source ready (browser automation, experimental)."
 
     def search(self, request: SearchRequest) -> list[FlightOffer]:
@@ -299,10 +305,13 @@ def _extract_price(card, text: str) -> float | None:
     return None
 
 
-#: "06:30 – 10:45", "6:30 am – 10:45 pm", and Kayak's next-day marker after the
-#: arrival ("10:45 pm+1", or "+1" on the next line of the card's text).
+#: "06:30 – 10:45", "6:30 am – 10:45 pm", and Kayak's day marker after the
+#: arrival ("10:45 pm+1", "+1" on the next line of the card's text, or "-1"). The
+#: marker is a sign glued to ONE digit, so "+ 1 stop", "+20 €" or "+2 airlines"
+#: are not read as days.
 _LEG_PATTERN = re.compile(
-    r"(\d{1,2}:\d{2})\s*(am|pm)?\s*[-–—]\s*(\d{1,2}:\d{2})\s*(am|pm)?(?:\s*\+\s*(\d))?",
+    r"(\d{1,2}:\d{2})\s*(am|pm)?\s*[-–—]\s*(\d{1,2}:\d{2})\s*(am|pm)?"
+    r"(?:[ \t]*\n?[ \t]*([+-]\d)(?!\d)(?!\s*(?:stops?|airlines?)\b))?",
     re.IGNORECASE,
 )
 
@@ -311,7 +320,7 @@ def _to_24h(hhmm: str, meridiem: str) -> str:
     """``"6:30", "pm"`` -> ``"18:30"``; no meridiem means already 24h."""
     hours, minutes = hhmm.split(":")
     h = int(hours)
-    m = meridiem.lower()
+    m = meridiem.lower() if h <= 12 else ""  # "13:00 pm" is already 24-hour
     if m == "pm" and h != 12:
         h += 12
     elif m == "am" and h == 12:
@@ -324,11 +333,11 @@ def _extract_legs(card, text: str) -> list[tuple[str, str, int]]:
 
     Returns list of (departure_time, arrival_time, days_later): times as
     24-hour HH:MM strings, and the number of days after the departure date on
-    which the flight lands (Kayak's "+1"; 0 when absent).
+    which the flight lands (Kayak's "+1" or "-1"; 0 when absent).
     """
     return [
-        (_to_24h(dep, dep_m), _to_24h(arr, arr_m), int(plus or 0))
-        for dep, dep_m, arr, arr_m, plus in _LEG_PATTERN.findall(text)
+        (_to_24h(dep, dep_m), _to_24h(arr, arr_m), int(days or 0))
+        for dep, dep_m, arr, arr_m, days in _LEG_PATTERN.findall(text)
     ]
 
 
@@ -338,8 +347,11 @@ def _arrival(departure_date: str, leg: tuple[str, str, int]) -> str:
     Stamping it with the departure date put an overnight arrival on the wrong
     day (thorwhalen/farepy#6), the way ``google_flights_source`` already avoids.
     """
-    landed = date.fromisoformat(departure_date) + timedelta(days=leg[2])
-    return f"{landed.isoformat()}T{leg[1]}:00"
+    try:
+        landed = (date.fromisoformat(departure_date) + timedelta(days=leg[2])).isoformat()
+    except ValueError:  # not YYYY-MM-DD: keep the date as given, as before
+        landed = departure_date
+    return f"{landed}T{leg[1]}:00"
 
 
 def _extract_airline(card, text: str) -> str | None:
