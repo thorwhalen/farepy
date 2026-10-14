@@ -1,8 +1,10 @@
 """Kayak flight search adapter using playwright browser automation."""
 
 import logging
+import os
 import re
 import time
+from datetime import date, timedelta
 
 from farepy.base import FlightOffer, Itinerary, SearchRequest, Segment
 
@@ -29,12 +31,17 @@ class KayakSource:
                 "Playwright not installed. Run: pip install playwright && "
                 "playwright install chromium"
             )
-        # Check if chromium is installed by trying to get executable path
+        # Starting playwright can fail for reasons that have nothing to do with
+        # the browser (e.g. the sync API called inside a running asyncio loop),
+        # so a failure here is reported as itself; only a missing executable
+        # is "Chromium not installed" (thorwhalen/farepy#6).
         try:
             with sync_playwright() as p:
-                p.chromium.executable_path  # noqa: B018
+                executable = p.chromium.executable_path
         except Exception as e:
-            logger.debug("Kayak: chromium check failed: %r", e)
+            logger.debug("Kayak: playwright start failed: %r", e)
+            return False, f"Playwright could not start: {type(e).__name__}: {e}"
+        if not executable or not os.path.exists(executable):
             return False, (
                 "Chromium browser not installed for playwright. "
                 "Run: playwright install chromium"
@@ -227,7 +234,7 @@ def _parse_card(card, request: SearchRequest) -> FlightOffer | None:
                 departure_airport=request.origin,
                 arrival_airport=request.destination,
                 departure_time=f"{request.departure_date}T{outbound_leg[0]}:00",
-                arrival_time=f"{request.departure_date}T{outbound_leg[1]}:00",
+                arrival_time=_arrival(request.departure_date, outbound_leg),
                 carrier=airline_text or "UNKNOWN",
                 carrier_name=airline_text,
                 flight_number=None,
@@ -247,7 +254,7 @@ def _parse_card(card, request: SearchRequest) -> FlightOffer | None:
                     departure_airport=request.destination,
                     arrival_airport=request.origin,
                     departure_time=f"{request.return_date}T{inbound_leg[0]}:00",
-                    arrival_time=f"{request.return_date}T{inbound_leg[1]}:00",
+                    arrival_time=_arrival(request.return_date, inbound_leg),
                     carrier=airline_text or "UNKNOWN",
                     carrier_name=airline_text,
                     flight_number=None,
@@ -292,23 +299,47 @@ def _extract_price(card, text: str) -> float | None:
     return None
 
 
-def _extract_legs(card, text: str) -> list[tuple[str, str]]:
+#: "06:30 – 10:45", "6:30 am – 10:45 pm", and Kayak's next-day marker after the
+#: arrival ("10:45 pm+1", or "+1" on the next line of the card's text).
+_LEG_PATTERN = re.compile(
+    r"(\d{1,2}:\d{2})\s*(am|pm)?\s*[-–—]\s*(\d{1,2}:\d{2})\s*(am|pm)?(?:\s*\+\s*(\d))?",
+    re.IGNORECASE,
+)
+
+
+def _to_24h(hhmm: str, meridiem: str) -> str:
+    """``"6:30", "pm"`` -> ``"18:30"``; no meridiem means already 24h."""
+    hours, minutes = hhmm.split(":")
+    h = int(hours)
+    m = meridiem.lower()
+    if m == "pm" and h != 12:
+        h += 12
+    elif m == "am" and h == 12:
+        h = 0
+    return f"{h:02d}:{minutes}"
+
+
+def _extract_legs(card, text: str) -> list[tuple[str, str, int]]:
     """Extract departure-arrival time pairs.
 
-    Returns list of (departure_time, arrival_time) as HH:MM strings.
+    Returns list of (departure_time, arrival_time, days_later): times as
+    24-hour HH:MM strings, and the number of days after the departure date on
+    which the flight lands (Kayak's "+1"; 0 when absent).
     """
-    # Look for time patterns like "06:30 – 10:45" or "6:30 am – 10:45 am"
-    time_pattern = r"(\d{1,2}:\d{2})\s*(?:am|pm|AM|PM)?\s*[-–—]\s*(\d{1,2}:\d{2})\s*(?:am|pm|AM|PM)?"
-    matches = re.findall(time_pattern, text)
+    return [
+        (_to_24h(dep, dep_m), _to_24h(arr, arr_m), int(plus or 0))
+        for dep, dep_m, arr, arr_m, plus in _LEG_PATTERN.findall(text)
+    ]
 
-    legs = []
-    for dep, arr in matches:
-        # Normalize to HH:MM
-        dep = dep.zfill(5)
-        arr = arr.zfill(5)
-        legs.append((dep, arr))
 
-    return legs
+def _arrival(departure_date: str, leg: tuple[str, str, int]) -> str:
+    """The arrival as ISO local time, on the date the flight actually lands.
+
+    Stamping it with the departure date put an overnight arrival on the wrong
+    day (thorwhalen/farepy#6), the way ``google_flights_source`` already avoids.
+    """
+    landed = date.fromisoformat(departure_date) + timedelta(days=leg[2])
+    return f"{landed.isoformat()}T{leg[1]}:00"
 
 
 def _extract_airline(card, text: str) -> str | None:

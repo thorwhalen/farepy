@@ -74,11 +74,20 @@ def time_in_range(
 ) -> bool:
     """Check if a HH:MM time falls within the given range.
 
+    An unknown time (``""``, as a source that does not report arrivals emits)
+    cannot be judged, so it is kept rather than filtered out: comparing ``""``
+    with ``"08:00"`` used to drop every Ryanair offer under any arrival filter
+    (thorwhalen/farepy#6).
+
     >>> time_in_range('14:30', after='08:00', before='18:00')
     True
     >>> time_in_range('06:00', after='08:00')
     False
+    >>> time_in_range('', after='08:00', before='18:00')
+    True
     """
+    if not time_str:
+        return True
     if after and time_str < after:
         return False
     if before and time_str > before:
