@@ -13,6 +13,7 @@ PROVIDER_MODULES = ("fast_flights", "ryanair", "playwright", "playwright.sync_ap
 #: regressed, these self-tests would time out against it instead of reaching a real host.
 TEST_NET = "192.0.2.1"
 
+
 def test_raw_socket_connect_is_refused():
     with socket.socket() as s, pytest.raises(RuntimeError, match="network access attempted"):
         s.connect((TEST_NET, 80))
